@@ -1,52 +1,167 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import heroBackground from "@/assets/hero-background.jpg";
+import logo3D from "@/assets/3dLogo.png";
 
 const Hero = () => {
   return (
-    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section
+      id="home"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+    >
       {/* Background Image */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${heroBackground})` }}
       />
-      
+
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-sobitas-black/90 to-sobitas-black/70" />
-      
+      <div className="absolute inset-0 bg-gradient-to-r from-secondary/90 to-secondary/70" />
+
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="animate-fade-in">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">
+          {/* 3D Floating Logo - FIRST ELEMENT - CLEAN VERSION */}
+          <motion.div
+            className="flex justify-center items-center mb-12"
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 1.2,
+              ease: "easeOut",
+            }}
+          >
+            <motion.div
+              className="relative"
+              animate={{
+                y: [-10, 10, -10],
+                rotateY: [-15, 15, -15],
+                rotateX: [-5, 5, -5],
+              }}
+              transition={{
+                y: {
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                },
+                rotateY: {
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                },
+                rotateX: {
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                },
+              }}
+              style={{
+                perspective: "1000px",
+                transformStyle: "preserve-3d",
+              }}
+            >
+              {/* Main 3D Logo - Smaller Size */}
+              <motion.img
+                src={logo3D}
+                alt="Sobitas 3D Logo"
+                className="relative z-10 w-32 h-22 md:w-40 md:h-40 lg:w-48 lg:h-48 object-contain"
+                style={{
+                  filter: "drop-shadow(0 15px 30px rgba(0, 0, 0, 0.3))",
+                  transformStyle: "preserve-3d",
+                }}
+              />
+            </motion.div>
+          </motion.div>
+
+          {/* Title - AFTER LOGO */}
+          <motion.h1
+            className="text-5xl md:text-7xl font-bold mb-6"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
+          >
             <span className="text-gradient">Suppléments</span>
             <br />
-            <span className="text-foreground">Premium</span>
-          </h1>
-          
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Alimentez votre parcours fitness avec des suppléments et équipements de qualité professionnelle conçus pour les champions.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button 
-              size="lg" 
+            <span className="text-white">Premium</span>
+          </motion.h1>
+
+          {/* Description */}
+          <motion.p
+            className="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.6 }}
+          >
+            Alimentez votre parcours fitness avec des suppléments et équipements
+            de qualité professionnelle conçus pour les champions.
+          </motion.p>
+
+          {/* Buttons - LAST */}
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.8 }}
+          >
+            <Button
+              asChild
+              size="lg"
               className="gradient-primary text-white font-semibold px-8 py-4 text-lg hover:shadow-glow transition-smooth animate-glow"
             >
-              Explorer les Produits
+              <Link to="/products">Explorer les Produits</Link>
             </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-sobitas-red text-sobitas-red hover:bg-sobitas-red hover:text-white px-8 py-4 text-lg transition-smooth"
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="border-white text-white hover:bg-white hover:text-gray-900 px-8 py-4 text-lg transition-smooth"
             >
-              En Savoir Plus
+              <Link to="/about">En Savoir Plus</Link>
             </Button>
-          </div>
+          </motion.div>
+
+          {/* Elegant tagline */}
+          <motion.p
+            className="text-lg md:text-xl text-gray-300 mt-12 font-medium tracking-wide"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1.2 }}
+          >
+            <span className="text-red-400">●</span> L'Excellence en Mouvement{" "}
+            <span className="text-red-400">●</span>
+          </motion.p>
         </div>
       </div>
-      
-      {/* Floating Elements */}
-      <div className="absolute top-20 right-10 w-20 h-20 bg-sobitas-red/20 rounded-full animate-pulse hidden lg:block" />
-      <div className="absolute bottom-20 left-10 w-16 h-16 bg-sobitas-red/10 rounded-full animate-pulse hidden lg:block" />
+
+      {/* Simple Floating Elements */}
+      <motion.div
+        className="absolute top-20 right-10 w-20 h-20 bg-red-500/20 rounded-full hidden lg:block"
+        animate={{
+          y: [-10, 10, -10],
+          opacity: [0.3, 0.6, 0.3],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{
+          duration: 5,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div
+        className="absolute bottom-20 left-10 w-16 h-16 bg-red-500/30 rounded-full hidden lg:block"
+        animate={{
+          y: [10, -10, 10],
+          opacity: [0.4, 0.7, 0.4],
+          scale: [1.1, 1, 1.1],
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1,
+        }}
+      />
     </section>
   );
 };

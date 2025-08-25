@@ -1,10 +1,8 @@
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import { CallToAction } from "@/components/CallToAction";
 
 const Contact = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-16">
       <CallToAction />
     </div>
   );

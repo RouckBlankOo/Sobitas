@@ -1,19 +1,15 @@
-import Navigation from "@/components/Navigation";
-import Hero from "@/components/Hero";
-import ProductShowcase from "@/components/ProductShowcase";
-import Features from "@/components/Features";
-import FAQ from "@/components/FAQ";
-import Footer from "@/components/Footer";
+import Hero from "../components/Hero";
+import Features from "../components/Features";
+import ProductShowcase from "../components/ProductShowcase";
+import FAQ from "../components/FAQ";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-sobitas-black">
-      <Navigation />
+    <div>
       <Hero />
-      <ProductShowcase />
       <Features />
+      <ProductShowcase />
       <FAQ />
-      <Footer />
     </div>
   );
 };

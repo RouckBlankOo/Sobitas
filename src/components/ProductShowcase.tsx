@@ -54,10 +54,7 @@ const products = [
 
 const ProductShowcase = () => {
   return (
-    <section
-      id="products"
-      className="py-20 bg-gradient-to-b from-sobitas-black to-sobitas-charcoal"
-    >
+    <section id="products" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in">
@@ -76,7 +73,7 @@ const ProductShowcase = () => {
           {products.map((product) => (
             <Card
               key={product.id}
-              className="bg-card/50 backdrop-blur-sm border-sobitas-charcoal hover:border-sobitas-red transition-smooth shadow-card hover:shadow-glow animate-scale-in group"
+              className="bg-card backdrop-blur-sm border-border hover:border-primary transition-smooth shadow-card hover:shadow-glow animate-scale-in group"
             >
               <CardHeader className="relative p-0">
                 <div className="relative overflow-hidden rounded-t-lg">
@@ -106,7 +103,7 @@ const ProductShowcase = () => {
                     <Badge
                       key={index}
                       variant="secondary"
-                      className="bg-sobitas-charcoal text-sobitas-red border-sobitas-red/20"
+                      className="bg-secondary text-primary border-primary/20"
                     >
                       {feature}
                     </Badge>
@@ -115,7 +112,7 @@ const ProductShowcase = () => {
 
                 {/* Price */}
                 <div className="flex items-center gap-2 mb-4">
-                  <span className="text-2xl font-bold text-sobitas-red">
+                  <span className="text-2xl font-bold text-primary">
                     {product.price}
                   </span>
                   <span className="text-lg text-muted-foreground line-through">
@@ -136,7 +133,7 @@ const ProductShowcase = () => {
           <Button
             variant="outline"
             size="lg"
-            className="border-sobitas-red text-sobitas-red hover:bg-sobitas-red hover:text-white px-8 py-4 text-lg transition-smooth"
+            className="border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 text-lg transition-smooth"
           >
             Voir Tous les Produits
           </Button>

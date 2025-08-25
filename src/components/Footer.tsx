@@ -1,30 +1,28 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-sobitas-black border-t border-sobitas-charcoal">
+    <footer className="bg-white border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
           <div className="col-span-1 md:col-span-2">
-            <img src="Sobita" alt="SOBITAS" className="h-8 w-auto mb-4" />
-            <p className="text-muted-foreground mb-6 max-w-md">
+            <p className="text-gray-600 mb-6 max-w-md">
               Suppléments premium et équipements conçus pour les champions.
               Alimentez votre parcours fitness avec des produits de qualité
               professionnelle.
             </p>
-
-            {/* Newsletter Signup */}
             <div className="max-w-md">
-              <h3 className="text-foreground font-semibold mb-3">
+              <h3 className="text-gray-900 font-semibold mb-3">
                 Restez Informé
               </h3>
               <div className="flex gap-2">
                 <Input
                   placeholder="Entrez votre email"
-                  className="bg-sobitas-charcoal border-sobitas-charcoal text-foreground placeholder:text-muted-foreground"
+                  className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-500"
                 />
                 <Button className="gradient-primary text-white font-semibold px-6">
                   S'abonner
@@ -35,110 +33,115 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-foreground font-semibold mb-4">
-              Liens Rapides
-            </h3>
+            <h3 className="text-gray-900 font-semibold mb-4">Liens Rapides</h3>
             <ul className="space-y-3">
               <li>
-                <a
-                  href="#home"
-                  className="text-muted-foreground hover:text-sobitas-red transition-smooth"
+                <Link
+                  to="/"
+                  className="text-gray-600 hover:text-red-600 transition-smooth"
                 >
                   Accueil
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#products"
-                  className="text-muted-foreground hover:text-sobitas-red transition-smooth"
+                <Link
+                  to="/products"
+                  className="text-gray-600 hover:text-red-600 transition-smooth"
                 >
                   Produits
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#about"
-                  className="text-muted-foreground hover:text-sobitas-red transition-smooth"
+                <Link
+                  to="/about"
+                  className="text-gray-600 hover:text-red-600 transition-smooth"
                 >
                   À Propos
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#contact"
-                  className="text-muted-foreground hover:text-sobitas-red transition-smooth"
+                <Link
+                  to="/contact"
+                  className="text-gray-600 hover:text-red-600 transition-smooth"
                 >
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
 
           {/* Support */}
           <div>
-            <h3 className="text-foreground font-semibold mb-4">Support</h3>
+            <h3 className="text-gray-900 font-semibold mb-4">Support</h3>
             <ul className="space-y-3">
               <li>
-                <a
-                  href="#"
-                  className="text-muted-foreground hover:text-sobitas-red transition-smooth"
+                <Link
+                  to="/help"
+                  className="text-gray-600 hover:text-red-600 transition-smooth"
                 >
                   Centre d'Aide
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-muted-foreground hover:text-sobitas-red transition-smooth"
+                <Link
+                  to="/shipping"
+                  className="text-gray-600 hover:text-red-600 transition-smooth"
                 >
                   Info Livraison
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-muted-foreground hover:text-sobitas-red transition-smooth"
+                <Link
+                  to="/returns"
+                  className="text-gray-600 hover:text-red-600 transition-smooth"
                 >
                   Retours
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-muted-foreground hover:text-sobitas-red transition-smooth"
+                <Link
+                  to="/track-order"
+                  className="text-gray-600 hover:text-red-600 transition-smooth"
                 >
                   Suivi Commande
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-sobitas-charcoal mt-12 pt-8">
+        <div className="border-t border-gray-200 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            {/* Copyright */}
-            <p className="text-muted-foreground text-sm mb-4 md:mb-0">
+            <p className="text-gray-600 text-sm mb-4 md:mb-0">
               © 2025 inoveralab. Tous droits réservés.
             </p>
-
-            {/* Social Links */}
             <div className="flex items-center space-x-4">
               <a
                 href="https://www.facebook.com/sobitass"
-                className="text-muted-foreground hover:text-sobitas-red transition-smooth"
+                className="text-gray-600 hover:text-red-600 transition-smooth"
+                aria-label="Facebook"
               >
                 <Facebook className="h-5 w-5" />
               </a>
               <a
                 href="https://www.instagram.com/sobitas_/"
-                className="text-muted-foreground hover:text-sobitas-red transition-smooth"
+                className="text-gray-600 hover:text-red-600 transition-smooth"
+                aria-label="Instagram"
               >
                 <Instagram className="h-5 w-5" />
               </a>
               <a
                 href="#"
-                className="text-muted-foreground hover:text-sobitas-red transition-smooth"
+                className="text-gray-600 hover:text-red-600 transition-smooth"
+                aria-label="Twitter"
+              >
+                <Twitter className="h-5 w-5" />
+              </a>
+              <a
+                href="#"
+                className="text-gray-600 hover:text-red-600 transition-smooth"
+                aria-label="YouTube"
               >
                 <Youtube className="h-5 w-5" />
               </a>

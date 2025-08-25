@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindAnimate from "tailwindcss-animate"; // Import instead of require
 
 export default {
 	darkMode: ["class"],
@@ -68,8 +69,8 @@ export default {
 				sobitas: {
 					red: 'hsl(var(--sobitas-red))',
 					'red-dark': 'hsl(var(--sobitas-red-dark))',
-					black: 'hsl(var(--sobitas-black))',
-					charcoal: 'hsl(var(--sobitas-charcoal))'
+					dark: 'hsl(var(--sobitas-dark))',
+					white: 'hsl(var(--sobitas-white))'
 				}
 			},
 			borderRadius: {
@@ -79,48 +80,24 @@ export default {
 			},
 			keyframes: {
 				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
+					from: { height: '0' },
+					to: { height: 'var(--radix-accordion-content-height)' }
 				},
 				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
-					},
-					to: {
-						height: '0'
-					}
+					from: { height: 'var(--radix-accordion-content-height)' },
+					to: { height: '0' }
 				},
 				'fade-in': {
-					'0%': {
-						opacity: '0',
-						transform: 'translateY(20px)'
-					},
-					'100%': {
-						opacity: '1',
-						transform: 'translateY(0)'
-					}
+					'0%': { opacity: '0', transform: 'translateY(20px)' },
+					'100%': { opacity: '1', transform: 'translateY(0)' }
 				},
 				'scale-in': {
-					'0%': {
-						transform: 'scale(0.95)',
-						opacity: '0'
-					},
-					'100%': {
-						transform: 'scale(1)',
-						opacity: '1'
-					}
+					'0%': { transform: 'scale(0.95)', opacity: '0' },
+					'100%': { transform: 'scale(1)', opacity: '1' }
 				},
 				'glow': {
-					'0%, 100%': {
-						boxShadow: '0 0 20px hsl(var(--sobitas-red) / 0.3)'
-					},
-					'50%': {
-						boxShadow: '0 0 30px hsl(var(--sobitas-red) / 0.5)'
-					}
+					'0%, 100%': { boxShadow: '0 0 20px hsl(var(--sobitas-red) / 0.3)' },
+					'50%': { boxShadow: '0 0 30px hsl(var(--sobitas-red) / 0.5)' }
 				}
 			},
 			animation: {
@@ -132,5 +109,5 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [tailwindAnimate], // Use imported module
 } satisfies Config;
