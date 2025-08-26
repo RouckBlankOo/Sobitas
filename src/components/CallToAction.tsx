@@ -378,7 +378,7 @@ export const CallToAction = () => {
                 </li>
                 <li className="flex items-center gap-2">
                   <Zap className="w-4 h-4 text-green-600" />
-                  <span className="text-sm">Livraison gratuite dès 75€</span>
+                  <span className="text-sm">Livraison gratuite dès 400DT</span>
                 </li>
               </ul>
             </div>

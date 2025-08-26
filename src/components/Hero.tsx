@@ -24,7 +24,7 @@ const Hero = () => {
         <div className="animate-fade-in">
           {/* 3D Floating Logo - FIRST ELEMENT - CLEAN VERSION */}
           <motion.div
-            className="flex justify-center items-center mb-12"
+            className="flex justify-center items-center mb-8"
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
@@ -35,8 +35,8 @@ const Hero = () => {
             <motion.div
               className="relative"
               animate={{
-                y: [-10, 10, -10],
-                rotateY: [-15, 15, -15],
+                y: [0, 20, 0],
+                rotateY: [-10, 10, -10],
                 rotateX: [-5, 5, -5],
               }}
               transition={{
@@ -115,21 +115,54 @@ const Hero = () => {
               asChild
               variant="outline"
               size="lg"
-              className="border-white text-white hover:bg-white hover:text-gray-900 px-8 py-4 text-lg transition-smooth"
+              className="border-red-600  text-red-600 hover:bg-red-600 hover:text-white px-8 py-4 text-lg transition-smooth"
             >
               <Link to="/about">En Savoir Plus</Link>
             </Button>
           </motion.div>
 
-          {/* Elegant tagline */}
+          {/* SOBITAS Abbreviation */}
           <motion.p
             className="text-lg md:text-xl text-gray-300 mt-12 font-medium tracking-wide"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.2 }}
           >
-            <span className="text-red-400">●</span> L'Excellence en Mouvement{" "}
-            <span className="text-red-400">●</span>
+            <span className="text-primary font-bold">S</span>.
+            <span className="text-primary font-bold">O</span>.
+            <span className="text-primary font-bold">B</span>.
+            <span className="text-primary font-bold">I</span>.
+            <span className="text-primary font-bold">T</span>.
+            <span className="text-primary font-bold">A</span>.
+            <span className="text-primary font-bold">S</span>
+          </motion.p>
+          <motion.p
+            className="text-base md:text-lg text-gray-300 mt-2 font-medium tracking-wide flex flex-wrap justify-center gap-2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1.4 }}
+          >
+            <span>
+              <span className="text-primary font-bold">S</span>anté
+            </span>
+            <span>
+              <span className="text-primary font-bold">O</span>ptimale
+            </span>
+            <span>
+              <span className="text-primary font-bold">B</span>ase
+            </span>
+            <span>
+              <span className="text-primary font-bold">I</span>ntensité
+            </span>
+            <span>
+              <span className="text-primary font-bold">T</span>ransformation
+            </span>
+            <span>
+              <span className="text-primary font-bold">A</span>mélioration
+            </span>
+            <span>
+              <span className="text-primary font-bold">S</span>uccès
+            </span>
           </motion.p>
         </div>
       </div>

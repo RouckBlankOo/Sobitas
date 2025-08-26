@@ -88,8 +88,8 @@ const About = () => {
                     <div className="text-red-100">Produits</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold mb-2">50+</div>
-                    <div className="text-red-100">Pays</div>
+                    <div className="text-3xl font-bold mb-2">24+</div>
+                    <div className="text-red-100">État</div>
                   </div>
                 </div>
               </div>

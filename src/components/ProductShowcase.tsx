@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import proteinPowder from "@/assets/protein.jpg";
@@ -17,8 +18,8 @@ const products = [
     name: "Protéine Whey Premium",
     description:
       "Isolat de protéine whey de haute qualité pour une croissance musculaire et récupération maximales.",
-    price: "49,99€",
-    originalPrice: "59,99€",
+    price: "259DT",
+    originalPrice: "299DT",
     image: proteinPowder,
     badge: "Meilleure Vente",
     features: ["25g Protéine", "Absorption Rapide", "Excellent Goût"],
@@ -28,19 +29,19 @@ const products = [
     name: "Pré-Entraînement Extrême",
     description:
       "Formule d'énergie et de concentration maximales pour surmonter vos entraînements les plus difficiles.",
-    price: "39,99€",
-    originalPrice: "49,99€",
+    price: "89DT",
+    originalPrice: "119DT",
     image: preWorkout,
     badge: "Nouveau",
-    features: ["300mg Caféine", "Zéro Chute", "Formule Pump"],
+    features: ["300mg Caféine Par Scoop", "Zéro Chute", "Formule Pump"],
   },
   {
     id: 3,
     name: "Équipement Professionnel",
     description:
       "Équipement différent de fitness de qualité commerciale conçu pour durer avec des matériaux premium.",
-    price: "299,99€",
-    originalPrice: "399,99€",
+    price: "1499DT",
+    originalPrice: "1899DT",
     image: gymEquipment,
     badge: "Limité",
     features: [
@@ -135,7 +136,7 @@ const ProductShowcase = () => {
             size="lg"
             className="border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 text-lg transition-smooth"
           >
-            Voir Tous les Produits
+            <Link to="/products">Voir Tous les Produits</Link>
           </Button>
         </div>
       </div>

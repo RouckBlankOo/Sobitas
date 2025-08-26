@@ -14,7 +14,7 @@ const faqs = [
   {
     question: "Combien de temps prend la livraison ?",
     answer:
-      "Nous offrons une livraison rapide avec la plupart des commandes arrivant dans les 2-5 jours ouvrables. Nous proposons également des options de livraison express pour les commandes urgentes. Toutes les commandes de plus de 75€ bénéficient de la livraison gratuite.",
+      "Nous offrons une livraison rapide avec la plupart des commandes arrivant dans les 2-5 jours ouvrables. Nous proposons également des options de livraison express pour les commandes urgentes. Toutes les commandes de plus de 400DT bénéficient de la livraison gratuite.",
   },
   {
     question: "Vos produits sont-ils sûrs et testés ?",

@@ -20,7 +20,7 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Montserrat', 'sans-serif'],
+				sans: ['Russo One', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
