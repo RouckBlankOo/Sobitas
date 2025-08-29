@@ -82,7 +82,7 @@ const Navigation = () => {
                           className={`block px-4 py-2 text-sm ${
                             category.highlight
                               ? "text-primary font-semibold hover:bg-accent"
-                              : "text-white hover:text-primary hover:bg-accent"
+                              : "text-black hover:text-primary hover:bg-accent"
                           } transition-smooth`}
                         >
                           {category.name}
