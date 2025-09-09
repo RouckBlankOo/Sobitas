@@ -1,5 +1,8 @@
 import { Shield, Award, Users, Target } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
 
 const About = () => {
   const values = [
@@ -29,21 +32,45 @@ const About = () => {
     },
   ];
 
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+
   return (
-    <div className="min-h-screen bg-white pt-20">
+    <motion.div 
+      className="min-h-screen bg-white pt-20"
+      ref={ref}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+    >
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-gray-900 to-black text-white py-20">
+      <motion.section 
+        className="bg-gradient-to-r from-gray-900 to-black text-white py-20"
+        initial={{ opacity: 0, y: 50 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+        transition={{ duration: 0.8 }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+          <motion.h1 
+            className="text-4xl md:text-6xl font-bold mb-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
             À Propos de <span className="text-gradient">Sobitas</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+          </motion.h1>
+          <motion.p 
+            className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
             Nous sommes passionnés par l'aide que nous apportons aux athlètes et
             aux passionnés de fitness pour atteindre leurs objectifs avec des
             produits de qualité supérieure.
-          </p>
+          </motion.p>
         </div>
-      </section>
+      </motion.section>
 
       {/* Story Section */}
       <section className="py-20">
@@ -152,7 +179,7 @@ const About = () => {
           </div>
         </div>
       </section>
-    </div>
+    </motion.div>
   );
 };
 

@@ -4,6 +4,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+import { slideUpVariants } from "@/lib/utils";
 
 const faqs = [
   {
@@ -41,11 +45,26 @@ const faqs = [
 ];
 
 const FAQ = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+
   return (
-    <section className="py-20 bg-white">
+    <motion.section 
+      className="py-20 bg-white"
+      ref={ref}
+      initial="initial"
+      animate={isInView ? "animate" : "initial"}
+      variants={slideUpVariants}
+      transition={{ duration: 0.8 }}
+    >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-16 animate-fade-in">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 50 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             Questions <span className="text-gradient">Fréquentes</span>
           </h2>
@@ -53,31 +72,43 @@ const FAQ = () => {
             Vous avez des questions ? Nous avons les réponses pour vous aider à
             faire le meilleur choix pour votre parcours fitness.
           </p>
-        </div>
+        </motion.div>
 
         {/* FAQ Accordion */}
-        <Accordion
-          type="single"
-          collapsible
-          className="space-y-4 animate-scale-in"
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
         >
-          {faqs.map((faq, index) => (
-            <AccordionItem
-              key={index}
-              value={`item-${index}`}
-              className="bg-card backdrop-blur-sm border-border rounded-lg px-6 data-[state=open]:border-primary transition-smooth"
-            >
-              <AccordionTrigger className="text-left text-foreground hover:text-primary font-semibold text-lg py-6 hover:no-underline">
-                {faq.question}
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground pb-6 leading-relaxed">
-                {faq.answer}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+          <Accordion
+            type="single"
+            collapsible
+            className="space-y-4"
+          >
+            {faqs.map((faq, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: -20 }}
+                animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
+              >
+                <AccordionItem
+                  value={`item-${index}`}
+                  className="bg-card backdrop-blur-sm border-border rounded-lg px-6 data-[state=open]:border-primary transition-smooth"
+                >
+                  <AccordionTrigger className="text-left text-foreground hover:text-primary font-semibold text-lg py-6 hover:no-underline">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground pb-6 leading-relaxed">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              </motion.div>
+            ))}
+          </Accordion>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

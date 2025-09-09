@@ -9,6 +9,7 @@ import {
 } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useEffect } from "react";
+import { slideUpVariants, scaleVariants } from "@/lib/utils";
 
 const features = [
   {

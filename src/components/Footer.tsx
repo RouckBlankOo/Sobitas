@@ -1,9 +1,31 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { smoothScrollTo } from "@/lib/utils";
 
 const Footer = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Smooth scrolling navigation handler
+  const handleSmoothNavigation = (e: React.MouseEvent, path: string, sectionId?: string) => {
+    e.preventDefault();
+    
+    if (sectionId && (location.pathname === '/' || path === '/')) {
+      if (location.pathname !== '/') {
+        navigate('/');
+        setTimeout(() => {
+          smoothScrollTo(sectionId, 90);
+        }, 100);
+      } else {
+        smoothScrollTo(sectionId, 90);
+      }
+    } else {
+      navigate(path);
+    }
+  };
+
   return (
     <footer className="bg-white border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -36,28 +58,31 @@ const Footer = () => {
             <h3 className="text-gray-900 font-semibold mb-4">Liens Rapides</h3>
             <ul className="space-y-3">
               <li>
-                <Link
-                  to="/"
-                  className="text-gray-600 hover:text-red-600 transition-smooth"
+                <a
+                  href="/"
+                  onClick={(e) => handleSmoothNavigation(e, "/", "accueil")}
+                  className="text-gray-600 hover:text-red-600 transition-smooth cursor-pointer"
                 >
                   Accueil
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
-                  to="/products"
-                  className="text-gray-600 hover:text-red-600 transition-smooth"
+                <a
+                  href="/products"
+                  onClick={(e) => handleSmoothNavigation(e, "/products", "produits")}
+                  className="text-gray-600 hover:text-red-600 transition-smooth cursor-pointer"
                 >
                   Produits
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
-                  to="/about"
-                  className="text-gray-600 hover:text-red-600 transition-smooth"
+                <a
+                  href="/about"
+                  onClick={(e) => handleSmoothNavigation(e, "/about", "a-propos")}
+                  className="text-gray-600 hover:text-red-600 transition-smooth cursor-pointer"
                 >
                   À Propos
-                </Link>
+                </a>
               </li>
               <li>
                 <Link
@@ -74,6 +99,15 @@ const Footer = () => {
           <div>
             <h3 className="text-gray-900 font-semibold mb-4">Support</h3>
             <ul className="space-y-3">
+              <li>
+                <a
+                  href="#faq"
+                  onClick={(e) => handleSmoothNavigation(e, "/", "faq")}
+                  className="text-gray-600 hover:text-red-600 transition-smooth cursor-pointer"
+                >
+                  FAQ
+                </a>
+              </li>
               <li>
                 <Link
                   to="/help"

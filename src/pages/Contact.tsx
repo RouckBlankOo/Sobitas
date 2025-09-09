@@ -16,6 +16,13 @@ import {
   User,
   Globe,
   CheckCircle,
+  HelpCircle,
+  ChevronDown,
+  ChevronUp,
+  Store,
+  CreditCard,
+  Truck,
+  Headphones,
 } from "lucide-react";
 
 // Create motion components
@@ -25,38 +32,95 @@ const MotionButton = motion(Button);
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
+    firstName: "",
     email: "",
-    subject: "",
+    phone: "",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
-  // Contact information data
-  const contactInfo = [
+  // Store locations data
+  const storeLocations = [
     {
-      icon: Mail,
-      title: "Email",
-      value: "info@sobitas.com",
-      description: "Envoyez-nous un email",
-      href: "mailto:info@sobitas.com",
+      name: "SOBITAS Sousse",
+      address: "4000 Rue Ribat, Sousse 4000",
+      hours: "8h30 - 19h00 (lundi au samedi)",
+      phone: "71 751 934",
+      features: [
+        "Fermeture dimanche et jours fériés",
+        "Paiement par CB accepté",
+        "Possibilité de retrait en magasin",
+      ],
+      mapUrl: "https://maps.app.goo.gl/Wq1PUXaCMbw21ZKC9",
+    },
+  ];
+
+  // FAQ data
+  const faqData = [
+    {
+      category: "NOS BOUTIQUES",
+      questions: [
+        {
+          question: "Où puis-je trouver vos magasins physiques ?",
+          answer:
+            "Nous avons actuellement deux boutiques : une à Menzah 5 et une autre à La Marsa. Consultez nos horaires et adresses détaillées ci-dessus.",
+        },
+        {
+          question: "Puis-je retirer ma commande en magasin ?",
+          answer:
+            "Oui, vous pouvez choisir le retrait en magasin lors de votre commande. Nous vous préviendrons dès que votre commande sera prête.",
+        },
+      ],
     },
     {
-      icon: Phone,
-      title: "Téléphone",
-      value: "+1 (555) 123-4567",
-      description: "Appelez-nous directement",
-      href: "tel:+15551234567",
+      category: "SUIVI DES COMMANDES",
+      questions: [
+        {
+          question: "Comment suivre ma commande ?",
+          answer:
+            "Après votre commande, vous recevrez un email de confirmation avec un numéro de suivi. Vous pouvez également nous contacter pour connaître le statut de votre commande.",
+        },
+        {
+          question: "Quels sont les délais de livraison ?",
+          answer:
+            "Les délais de livraison varient selon votre localisation. En général, comptez 2-4 jours ouvrables pour la Tunisie.",
+        },
+      ],
     },
     {
-      icon: MapPin,
-      title: "Adresse",
-      value: "123 Fitness Street, Gym City, GC 12345",
-      description: "Visitez notre magasin",
-      href: "https://maps.google.com",
+      category: "CONDITIONS GÉNÉRALES DE VENTES",
+      questions: [
+        {
+          question: "Quelles sont vos conditions de retour ?",
+          answer:
+            "Vous disposez de 14 jours pour retourner un produit non ouvert. Les frais de retour sont à votre charge sauf en cas de défaut du produit.",
+        },
+        {
+          question: "Acceptez-vous tous les moyens de paiement ?",
+          answer:
+            "Nous acceptons les cartes bancaires, les virements et le paiement à la livraison selon les modalités disponibles.",
+        },
+      ],
+    },
+    {
+      category: "BESOIN D'UN CONSEIL SCIENTIFIQUE ?",
+      questions: [
+        {
+          question: "Puis-je avoir des conseils sur les suppléments ?",
+          answer:
+            "Oui, notre équipe d'experts est disponible pour vous conseiller sur le choix de vos suppléments selon vos objectifs fitness.",
+        },
+        {
+          question: "Comment choisir le bon produit pour mes objectifs ?",
+          answer:
+            "Contactez-nous via le formulaire ou par téléphone. Nous vous aiderons à sélectionner les produits adaptés à vos besoins spécifiques.",
+        },
+      ],
     },
   ];
 
@@ -155,12 +219,22 @@ const Contact = () => {
     // Reset form after 3 seconds
     setTimeout(() => {
       setIsSubmitted(false);
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      setFormData({
+        name: "",
+        firstName: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
     }, 3000);
   };
 
+  const toggleFaq = (index: number) => {
+    setExpandedFaq(expandedFaq === index ? null : index);
+  };
+
   return (
-    <div className="min-h-screen bg-white pt-20" ref={ref}>
+    <div className="min-h-screen bg-background pt-20" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header Section */}
         <motion.div
@@ -175,152 +249,211 @@ const Contact = () => {
             animate={isInView ? { scale: 1 } : { scale: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div className="p-4 bg-gradient-to-r from-red-600 to-red-700 rounded-full">
+            <div className="p-4 gradient-primary rounded-full">
               <MessageSquare className="h-8 w-8 text-white" />
             </div>
           </motion.div>
 
-          <h1 className="text-5xl md:text-6xl font-bold mb-4 text-gray-900">
-            Contactez{" "}
-            <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent">
-              Nous
-            </span>
+          <h1 className="text-5xl md:text-6xl font-bold mb-4 text-foreground">
+            Contactez <span className="text-gradient">Nous</span>
           </h1>
 
           <motion.p
-            className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+            className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             Nous sommes là pour répondre à toutes vos questions sur nos
             produits, votre commande ou pour vous conseiller dans votre parcours
-            fitness. Notre équipe d'experts est prête à vous aider.
+            fitness.
           </motion.p>
         </motion.div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-12">
-          {/* Contact Information Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          {/* Left Column - Stores and FAQ */}
           <motion.div
-            className="xl:col-span-2"
+            className="lg:col-span-2 space-y-12"
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
           >
-            <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mb-4">
-              {contactInfo.map((info, index) => {
-                const Icon = info.icon;
-                return (
-                  <motion.div key={index} variants={itemVariants}>
-                    <MotionCard
-                      className="h-full cursor-pointer group border border-gray-200 hover:border-red-500 shadow-sm hover:shadow-lg transition-all duration-300 bg-white"
-                      variants={cardVariants}
-                      whileHover="hover"
-                      onClick={() => window.open(info.href, "_blank")}
-                    >
-                      <CardContent className="p-6">
-                        <div className="flex items-start space-x-4">
-                          <motion.div
-                            className="p-3 rounded-xl bg-gradient-to-r from-red-600 to-red-700 shadow-md"
-                            whileHover={{ scale: 1.1, rotate: 5 }}
-                            transition={{ duration: 0.3 }}
-                          >
-                            <Icon className="h-6 w-6 text-white" />
-                          </motion.div>
-
-                          <div className="flex-1">
-                            <h3 className="font-semibold text-lg text-gray-900 mb-1 group-hover:text-red-600 transition-colors">
-                              {info.title}
-                            </h3>
-                            <p className="text-gray-600 text-sm mb-2">
-                              {info.description}
-                            </p>
-                            <p className="text-gray-800 font-medium group-hover:text-red-700 transition-colors">
-                              {info.value}
-                            </p>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </MotionCard>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-            {/* Business Hours Card */}
+            {/* Store Locations Section */}
             <motion.div variants={itemVariants}>
-              <MotionCard
-                className="border border-gray-200 shadow-sm bg-white"
-                variants={cardVariants}
-                whileHover={{ scale: 1.01 }}
-              >
-                <CardHeader className="pb-4">
-                  <div className="flex items-center space-x-3">
-                    <motion.div
-                      className="p-2 bg-gradient-to-r from-red-600 to-red-700 rounded-lg"
-                      whileHover={{ rotate: 15 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <Clock className="h-5 w-5 text-white" />
-                    </motion.div>
-                    <CardTitle className="text-2xl text-gray-900">
-                      Heures d'Ouverture
-                    </CardTitle>
-                  </div>
-                </CardHeader>
+              <div className="text-center mb-8">
+                <motion.div
+                  className="inline-flex items-center justify-center p-3 gradient-primary rounded-full mb-4"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Store className="h-6 w-6 text-white" />
+                </motion.div>
+                <h2 className="text-3xl font-bold text-foreground mb-2">
+                  Rendez-nous visite en point de vente
+                </h2>
+              </div>
 
-                <CardContent>
-                  <div className="space-y-4">
-                    {businessHours.map((schedule, index) => (
-                      <motion.div
-                        key={index}
-                        className="flex justify-between items-center p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={
-                          isInView
-                            ? { opacity: 1, x: 0 }
-                            : { opacity: 0, x: -20 }
-                        }
-                        transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-                      >
-                        <span className="font-medium text-gray-900">
-                          {schedule.day}
-                        </span>
-                        <div className="flex items-center space-x-2">
-                          <span className="text-gray-600">
-                            {schedule.hours}
-                          </span>
-                          <Badge
-                            variant={schedule.isOpen ? "default" : "secondary"}
-                            className={
-                              schedule.isOpen
-                                ? "bg-red-100 text-red-800 border-red-200"
-                                : "bg-gray-100 text-gray-600 border-gray-200"
-                            }
-                          >
-                            {schedule.isOpen ? "Ouvert" : "Fermé"}
-                          </Badge>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {storeLocations.map((store, index) => (
+                  <MotionCard
+                    key={index}
+                    className="border hover:border-primary/50 shadow-sm hover:shadow-lg transition-all duration-300"
+                    variants={cardVariants}
+                    whileHover="hover"
+                  >
+                    <CardContent className="p-6">
+                      <h3 className="font-bold text-lg text-foreground mb-3">
+                        {store.name}
+                      </h3>
+
+                      <div className="space-y-3 mb-4">
+                        <div className="flex items-start space-x-2">
+                          <MapPin className="h-4 w-4 text-primary mt-1 flex-shrink-0" />
+                          <p className="text-sm text-muted-foreground">
+                            {store.address}
+                          </p>
                         </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </CardContent>
-              </MotionCard>
+
+                        <div className="flex items-start space-x-2">
+                          <Clock className="h-4 w-4 text-primary mt-1 flex-shrink-0" />
+                          <p className="text-sm text-muted-foreground">
+                            {store.hours}
+                          </p>
+                        </div>
+
+                        <div className="flex items-start space-x-2">
+                          <Phone className="h-4 w-4 text-primary mt-1 flex-shrink-0" />
+                          <p className="text-sm text-muted-foreground">
+                            Téléphone: {store.phone}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2 mb-4">
+                        {store.features.map((feature, idx) => (
+                          <div
+                            key={idx}
+                            className="flex items-center space-x-2"
+                          >
+                            <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
+                            <span className="text-xs text-muted-foreground">
+                              {feature}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full border-primary text-primary hover:bg-primary hover:text-white"
+                        onClick={() => window.open(store.mapUrl, "_blank")}
+                      >
+                        Voir sur la carte
+                      </Button>
+                    </CardContent>
+                  </MotionCard>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* FAQ Section */}
+            <motion.div variants={itemVariants}>
+              <div className="text-center mb-8">
+                <motion.div
+                  className="inline-flex items-center justify-center p-3 gradient-primary rounded-full mb-4"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <HelpCircle className="h-6 w-6 text-white" />
+                </motion.div>
+                <h2 className="text-3xl font-bold text-foreground mb-2">
+                  Questions les plus fréquentes
+                </h2>
+                <p className="text-muted-foreground">
+                  On répond à vos questions
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                {faqData.map((category, categoryIndex) => (
+                  <MotionCard
+                    key={categoryIndex}
+                    className="border shadow-sm"
+                    variants={cardVariants}
+                  >
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-lg font-bold text-white bg-gradient-to-r from-red-600 to-black p-3 rounded-lg">
+                        {category.category}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      {category.questions.map((faq, questionIndex) => {
+                        const globalIndex = categoryIndex * 10 + questionIndex; // Unique index
+                        return (
+                          <div
+                            key={questionIndex}
+                            className="border rounded-lg"
+                          >
+                            <button
+                              className="w-full text-left p-4 hover:bg-muted/50 transition-colors flex items-center justify-between"
+                              onClick={() => toggleFaq(globalIndex)}
+                            >
+                              <span className="font-medium text-foreground">
+                                {faq.question}
+                              </span>
+                              {expandedFaq === globalIndex ? (
+                                <ChevronUp className="h-5 w-5 text-muted-foreground" />
+                              ) : (
+                                <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                              )}
+                            </button>
+                            {expandedFaq === globalIndex && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.3 }}
+                                className="px-4 pb-4"
+                              >
+                                <p className="text-muted-foreground text-sm leading-relaxed">
+                                  {faq.answer}
+                                </p>
+                              </motion.div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </CardContent>
+                  </MotionCard>
+                ))}
+              </div>
             </motion.div>
           </motion.div>
 
-          {/* Contact Form */}
+          {/* Right Column - Contact Form */}
           <motion.div
             variants={formVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
           >
-            <MotionCard className="border border-gray-200 shadow-lg sticky top-24 bg-white">
+            <MotionCard className="border shadow-lg sticky top-24">
               <CardHeader className="pb-6">
-                <CardTitle className="text-2xl text-gray-900 flex items-center">
-                  <User className="h-6 w-6 mr-2 text-red-600" />
-                  Envoyez-nous un Message
-                </CardTitle>
+                <div className="text-center mb-4">
+                  <motion.div
+                    className="inline-flex items-center justify-center p-3 gradient-primary rounded-full mb-4"
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <User className="h-6 w-6 text-white" />
+                  </motion.div>
+                  <CardTitle className="text-2xl text-foreground">
+                    Contactez-nous via le formulaire
+                  </CardTitle>
+                  <p className="text-muted-foreground text-sm mt-2">
+                    Besoin d'aide ?
+                  </p>
+                </div>
               </CardHeader>
 
               <CardContent>
@@ -332,39 +465,53 @@ const Contact = () => {
                     transition={{ duration: 0.5 }}
                   >
                     <motion.div
-                      className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4"
+                      className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4"
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                      <CheckCircle className="h-8 w-8 text-red-600" />
+                      <CheckCircle className="h-8 w-8 text-primary" />
                     </motion.div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    <h3 className="text-xl font-semibold text-foreground mb-2">
                       Message Envoyé!
                     </h3>
-                    <p className="text-gray-600">
+                    <p className="text-muted-foreground">
                       Merci pour votre message. Nous vous répondrons sous peu.
                     </p>
                   </motion.div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-900 mb-2">
-                        Nom Complet *
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        Nom*
                       </label>
                       <Input
                         name="name"
                         value={formData.name}
                         onChange={handleInputChange}
                         required
-                        className="w-full border-gray-300 focus:border-red-500 focus:ring-red-500 bg-white"
-                        placeholder="Votre nom complet"
+                        className="w-full focus:border-primary focus:ring-primary"
+                        placeholder="Votre nom"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-900 mb-2">
-                        Email *
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        Prénom*
+                      </label>
+                      <Input
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full focus:border-primary focus:ring-primary"
+                        placeholder="Votre prénom"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        E-mail*
                       </label>
                       <Input
                         type="email"
@@ -372,43 +519,45 @@ const Contact = () => {
                         value={formData.email}
                         onChange={handleInputChange}
                         required
-                        className="w-full border-gray-300 focus:border-red-500 focus:ring-red-500 bg-white"
+                        className="w-full focus:border-primary focus:ring-primary"
                         placeholder="votre@email.com"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-900 mb-2">
-                        Sujet
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        Téléphone*
                       </label>
                       <Input
-                        name="subject"
-                        value={formData.subject}
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
                         onChange={handleInputChange}
-                        className="w-full border-gray-300 focus:border-red-500 focus:ring-red-500 bg-white"
-                        placeholder="Sujet de votre message"
+                        required
+                        className="w-full focus:border-primary focus:ring-primary"
+                        placeholder="+216 XX XXX XXX"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-900 mb-2">
-                        Message *
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        Demande
                       </label>
                       <Textarea
                         name="message"
                         value={formData.message}
                         onChange={handleInputChange}
                         required
-                        rows={5}
-                        className="w-full border-gray-300 focus:border-red-500 focus:ring-red-500 resize-none bg-white"
-                        placeholder="Écrivez votre message ici..."
+                        rows={4}
+                        className="w-full focus:border-primary focus:ring-primary resize-none"
+                        placeholder="Décrivez votre demande..."
                       />
                     </div>
 
                     <MotionButton
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
+                      className="w-full gradient-primary hover:from-red-700 hover:to-red-800 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
@@ -426,13 +575,71 @@ const Contact = () => {
                         </motion.div>
                       ) : (
                         <span className="flex items-center justify-center">
-                          <Send className="h-5 w-5 mr-2" />
-                          Envoyer le Message
+                          Valider
                         </span>
                       )}
                     </MotionButton>
                   </form>
                 )}
+
+                {/* Chat Support Section */}
+                <div className="mt-8 p-4 bg-muted/30 rounded-lg border">
+                  <div className="flex items-center space-x-3 mb-3">
+                    <div className="w-10 h-10 bg-secondary rounded-full flex items-center justify-center">
+                      <Headphones className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-foreground">
+                        ISN CHAT
+                      </h4>
+                      <p className="text-xs text-muted-foreground">
+                        Dialoguez avec l'équipe commerciale et technique via la
+                        messagerie de chat instantanée
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    (service actif tous les jours de 8h à 22h30).
+                  </p>
+                </div>
+
+                {/* Quick Info Cards */}
+                <div className="mt-6 grid grid-cols-2 gap-4">
+                  <div className="text-center p-3 bg-muted/20 rounded-lg">
+                    <User className="h-6 w-6 text-primary mx-auto mb-2" />
+                    <h5 className="font-semibold text-sm text-foreground">
+                      Conseils scientifiques
+                    </h5>
+                    <p className="text-xs text-muted-foreground">
+                      Chat en Ligne
+                    </p>
+                  </div>
+                  <div className="text-center p-3 bg-muted/20 rounded-lg">
+                    <CreditCard className="h-6 w-6 text-primary mx-auto mb-2" />
+                    <h5 className="font-semibold text-sm text-foreground">
+                      Paiement par Visa CB
+                    </h5>
+                    <p className="text-xs text-muted-foreground">
+                      100% Sécurisé
+                    </p>
+                  </div>
+                  <div className="text-center p-3 bg-muted/20 rounded-lg">
+                    <Phone className="h-6 w-6 text-primary mx-auto mb-2" />
+                    <h5 className="font-semibold text-sm text-foreground">
+                      Suivi de vos Commandes
+                    </h5>
+                    <p className="text-xs text-muted-foreground">70838365</p>
+                  </div>
+                  <div className="text-center p-3 bg-muted/20 rounded-lg">
+                    <Truck className="h-6 w-6 text-primary mx-auto mb-2" />
+                    <h5 className="font-semibold text-sm text-foreground">
+                      Livraison gratuite par CB
+                    </h5>
+                    <p className="text-xs text-muted-foreground">
+                      Et retrait en magasin
+                    </p>
+                  </div>
+                </div>
               </CardContent>
             </MotionCard>
           </motion.div>
