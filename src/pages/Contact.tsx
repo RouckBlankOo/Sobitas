@@ -50,7 +50,7 @@ const Contact = () => {
       name: "SOBITAS Sousse",
       address: "4000 Rue Ribat, Sousse 4000",
       hours: "8h30 - 19h00 (lundi au samedi)",
-      phone: "71 751 934",
+      phone: "73 200 169",
       features: [
         "Fermeture dimanche et jours fériés",
         "Paiement par CB accepté",
