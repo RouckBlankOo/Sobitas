@@ -589,9 +589,7 @@ const Contact = () => {
                       <Headphones className="h-5 w-5 text-white" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-foreground">
-                        ISN CHAT
-                      </h4>
+                      <h4 className="font-semibold text-foreground">Sobitas</h4>
                       <p className="text-xs text-muted-foreground">
                         Dialoguez avec l'équipe commerciale et technique via la
                         messagerie de chat instantanée
