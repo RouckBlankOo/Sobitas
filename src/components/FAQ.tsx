@@ -49,7 +49,7 @@ const FAQ = () => {
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   return (
-    <motion.section 
+    <motion.section
       className="py-20 bg-white"
       ref={ref}
       initial="initial"
@@ -59,7 +59,7 @@ const FAQ = () => {
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <motion.div 
+        <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
@@ -80,16 +80,14 @@ const FAQ = () => {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <Accordion
-            type="single"
-            collapsible
-            className="space-y-4"
-          >
+          <Accordion type="single" collapsible className="space-y-4">
             {faqs.map((faq, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, x: -20 }}
-                animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                animate={
+                  isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }
+                }
                 transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
               >
                 <AccordionItem

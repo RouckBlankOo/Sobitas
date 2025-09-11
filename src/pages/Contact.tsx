@@ -52,7 +52,7 @@ const Contact = () => {
       hours: "8h30 - 19h00 (lundi au samedi)",
       phone: "73 200 169",
       features: [
-        "Fermeture dimanche et jours fériés",
+        "Toujours ouvert",
         "Paiement par CB accepté",
         "Possibilité de retrait en magasin",
       ],
@@ -68,7 +68,7 @@ const Contact = () => {
         {
           question: "Où puis-je trouver vos magasins physiques ?",
           answer:
-            "Nous avons actuellement deux boutiques : une à Menzah 5 et une autre à La Marsa. Consultez nos horaires et adresses détaillées ci-dessus.",
+            "Nous avons Un boutique au Rue Ribat. Consultez nos horaires et adresses détaillées ci-dessus.",
         },
         {
           question: "Puis-je retirer ma commande en magasin ?",
@@ -293,7 +293,7 @@ const Contact = () => {
                 </h2>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-1">
                 {storeLocations.map((store, index) => (
                   <MotionCard
                     key={index}

@@ -3,6 +3,9 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import wheyImage from "@/assets/whey.png";
+import supplementImage from "@/assets/suplement.png";
+import combatImage from "@/assets/combat.png";
 
 const About = () => {
   const values = [
@@ -36,7 +39,7 @@ const About = () => {
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   return (
-    <motion.div 
+    <motion.div
       className="min-h-screen bg-white pt-20"
       ref={ref}
       initial={{ opacity: 0 }}
@@ -44,14 +47,14 @@ const About = () => {
       transition={{ duration: 0.6 }}
     >
       {/* Hero Section */}
-      <motion.section 
+      <motion.section
         className="bg-gradient-to-r from-gray-900 to-black text-white py-20"
         initial={{ opacity: 0, y: 50 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
         transition={{ duration: 0.8 }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.h1 
+          <motion.h1
             className="text-4xl md:text-6xl font-bold mb-6"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -59,7 +62,7 @@ const About = () => {
           >
             À Propos de <span className="text-gradient">Sobitas</span>
           </motion.h1>
-          <motion.p 
+          <motion.p
             className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -69,6 +72,77 @@ const About = () => {
             aux passionnés de fitness pour atteindre leurs objectifs avec des
             produits de qualité supérieure.
           </motion.p>
+
+          {/* Floating Protein Products Animation */}
+          <motion.div
+            className="flex justify-center items-center gap-0 mt-8 transform translate-y-4"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            {/* Whey Protein - Front Left */}
+            <motion.div className="z-20 -mr-8 md:-mr-12 lg:-mr-10 transform translate-y-8">
+              <motion.img
+                src={wheyImage}
+                alt="Whey Protein"
+                className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 object-contain opacity-90 hover:opacity-100 transition-opacity"
+                whileHover={{
+                  scale: 1.1,
+                  y: -15,
+                  rotate: 5,
+                }}
+                transition={{
+                  duration: 0.3,
+                  ease: "easeInOut",
+                }}
+                style={{
+                  filter: "drop-shadow(0 10px 20px rgba(220, 38, 38, 0.4))",
+                }}
+              />
+            </motion.div>
+
+            {/* Supplement - Center Behind */}
+            <motion.div className="z-10 -mx-6 md:-mx-8 lg:-mx-10">
+              <motion.img
+                src={supplementImage}
+                alt="Supplement"
+                className="w-24 h-24 md:w-32 md:h-32 lg:w-36 lg:h-36 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                whileHover={{
+                  scale: 1.1,
+                  y: -20,
+                  rotate: -3,
+                }}
+                transition={{
+                  duration: 0.3,
+                  ease: "easeInOut",
+                }}
+                style={{
+                  filter: "drop-shadow(0 15px 30px rgba(220, 38, 38, 0.3))",
+                }}
+              />
+            </motion.div>
+
+            {/* Combat Protein - Front Right */}
+            <motion.div className="z-20 -ml-8 md:-ml-10 lg:-ml-10 transform translate-y-10">
+              <motion.img
+                src={combatImage}
+                alt="Combat Protein"
+                className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 object-contain opacity-90 hover:opacity-100 transition-opacity"
+                whileHover={{
+                  scale: 1.1,
+                  y: -12,
+                  rotate: -4,
+                }}
+                transition={{
+                  duration: 0.3,
+                  ease: "easeInOut",
+                }}
+                style={{
+                  filter: "drop-shadow(0 10px 20px rgba(220, 38, 38, 0.4))",
+                }}
+              />
+            </motion.div>
+          </motion.div>
         </div>
       </motion.section>
 
@@ -107,7 +181,7 @@ const About = () => {
                     <div className="text-red-100">Clients</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold mb-2">15</div>
+                    <div className="text-3xl font-bold mb-2">15+</div>
                     <div className="text-red-100">Années</div>
                   </div>
                   <div className="text-center">
@@ -115,7 +189,7 @@ const About = () => {
                     <div className="text-red-100">Produits</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold mb-2">24+</div>
+                    <div className="text-3xl font-bold mb-2">24</div>
                     <div className="text-red-100">État</div>
                   </div>
                 </div>

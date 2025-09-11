@@ -8,6 +8,7 @@ import {
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useCart } from "../hooks/useCart";
 import proteinPowder from "@/assets/protein.jpg";
 import preWorkout from "@/assets/pre-workout.webp";
 import gymEquipment from "@/assets/Materiel.webp";
@@ -54,6 +55,20 @@ const products = [
 ];
 
 const ProductShowcase = () => {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (product: (typeof products)[0]) => {
+    // Convert the product data to match CartItem interface
+    const cartItem = {
+      id: product.id,
+      name: product.name,
+      price: parseFloat(product.price.replace("DT", "")), // Convert "259DT" to 259
+      image: product.image,
+      originalPrice: parseFloat(product.originalPrice.replace("DT", "")),
+    };
+    addToCart(cartItem);
+  };
+
   return (
     <section id="products" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -121,7 +136,10 @@ const ProductShowcase = () => {
                   </span>
                 </div>
 
-                <Button className="w-full gradient-primary text-white font-semibold hover:shadow-glow transition-smooth">
+                <Button
+                  className="w-full gradient-primary text-white font-semibold hover:shadow-glow transition-smooth"
+                  onClick={() => handleAddToCart(product)}
+                >
                   Ajouter au Panier
                 </Button>
               </CardContent>

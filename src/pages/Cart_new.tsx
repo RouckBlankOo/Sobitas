@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Separator } from '@/components/ui/separator';
-import { Package, ShoppingCart, ArrowRight, ArrowLeft } from 'lucide-react';
+import React, { useState, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { Package, ShoppingCart, ArrowRight, ArrowLeft } from "lucide-react";
 
 interface CartItem {
   id: number;
@@ -19,16 +19,16 @@ const Cart = () => {
 
   // Current step state (1: Cart, 2: Checkout, 3: Confirmation)
   const [currentStep, setCurrentStep] = useState(1);
-  
+
   // Cart state
   const [cartItems, setCartItems] = useState<CartItem[]>([
     { id: 1, name: "Whey Protein Premium", price: 45.99, quantity: 2 },
     { id: 2, name: "Créatine Monohydrate", price: 29.99, quantity: 1 },
     { id: 3, name: "Pre-Workout Energy", price: 34.99, quantity: 1 },
   ]);
-  
+
   const [promoCode, setPromoCode] = useState("");
-  
+
   // Checkout form state
   const [checkoutForm, setCheckoutForm] = useState({
     firstName: "",
@@ -55,8 +55,9 @@ const Cart = () => {
       name: "Whey Protein Premium",
       price: "45.99",
       originalPrice: "59.99",
-      description: "Protéine de lactosérum de haute qualité pour la récupération musculaire.",
-      variants: ["Vanille", "Chocolat", "Fraise"]
+      description:
+        "Protéine de lactosérum de haute qualité pour la récupération musculaire.",
+      variants: ["Vanille", "Chocolat", "Fraise"],
     },
     {
       id: 2,
@@ -68,13 +69,17 @@ const Cart = () => {
       id: 3,
       name: "Pre-Workout Energy",
       price: "34.99",
-      description: "Boost d'énergie pré-entraînement avec caféine et vitamines.",
-      variants: ["Fruit Punch", "Blue Raspberry"]
-    }
+      description:
+        "Boost d'énergie pré-entraînement avec caféine et vitamines.",
+      variants: ["Fruit Punch", "Blue Raspberry"],
+    },
   ];
 
   // Calculations
-  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const subtotal = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
   const shipping = subtotal > 50 ? 0 : 5.99;
   const total = subtotal + shipping;
 
@@ -84,13 +89,13 @@ const Cart = () => {
       removeItem(id);
       return;
     }
-    setCartItems(cartItems.map(item => 
-      item.id === id ? { ...item, quantity } : item
-    ));
+    setCartItems(
+      cartItems.map((item) => (item.id === id ? { ...item, quantity } : item))
+    );
   };
 
   const removeItem = (id: number) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
+    setCartItems(cartItems.filter((item) => item.id !== id));
   };
 
   const applyPromoCode = () => {
@@ -140,9 +145,12 @@ const Cart = () => {
             {currentStep === 3 && "Commande confirmée"}
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            {currentStep === 1 && "Vérifiez vos articles et procédez au paiement"}
-            {currentStep === 2 && "Complétez vos informations pour finaliser votre commande"}
-            {currentStep === 3 && "Merci pour votre commande ! Nous la traiterons rapidement."}
+            {currentStep === 1 &&
+              "Vérifiez vos articles et procédez au paiement"}
+            {currentStep === 2 &&
+              "Complétez vos informations pour finaliser votre commande"}
+            {currentStep === 3 &&
+              "Merci pour votre commande ! Nous la traiterons rapidement."}
           </p>
         </motion.div>
 
@@ -156,12 +164,24 @@ const Cart = () => {
           <div className="flex items-center space-x-4">
             {[1, 2, 3].map((step) => (
               <div key={step} className="flex items-center">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold
-                  ${currentStep >= step ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}>
+                <div
+                  className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold
+                  ${
+                    currentStep >= step
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted text-muted-foreground"
+                  }`}
+                >
                   {step}
                 </div>
                 {step < 3 && (
-                  <ArrowRight className={`w-5 h-5 mx-2 ${currentStep > step ? 'text-primary' : 'text-muted-foreground'}`} />
+                  <ArrowRight
+                    className={`w-5 h-5 mx-2 ${
+                      currentStep > step
+                        ? "text-primary"
+                        : "text-muted-foreground"
+                    }`}
+                  />
                 )}
               </div>
             ))}
@@ -179,7 +199,7 @@ const Cart = () => {
                     <p className="text-lg text-muted-foreground mb-4">
                       Votre panier est vide
                     </p>
-                    <Button onClick={() => window.location.href = '/shop'}>
+                    <Button onClick={() => (window.location.href = "/shop")}>
                       Continuer les achats
                     </Button>
                   </Card>
@@ -199,30 +219,41 @@ const Cart = () => {
                             {item.name.charAt(0)}
                           </span>
                         </div>
-                        
+
                         <div className="flex-1">
                           <h3 className="font-semibold text-lg">{item.name}</h3>
-                          <p className="text-muted-foreground">{item.price}€ / unité</p>
+                          <p className="text-muted-foreground">
+                            {item.price}€ / unité
+                          </p>
                         </div>
-                        
+
                         <div className="flex items-center gap-2">
                           <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => updateQuantity(item.id, Math.max(0, item.quantity - 1))}
+                            onClick={() =>
+                              updateQuantity(
+                                item.id,
+                                Math.max(0, item.quantity - 1)
+                              )
+                            }
                           >
                             -
                           </Button>
-                          <span className="w-12 text-center">{item.quantity}</span>
+                          <span className="w-12 text-center">
+                            {item.quantity}
+                          </span>
                           <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity + 1)
+                            }
                           >
                             +
                           </Button>
                         </div>
-                        
+
                         <div className="text-right">
                           <p className="font-semibold text-lg">
                             {(item.price * item.quantity).toFixed(2)}€
@@ -246,26 +277,28 @@ const Cart = () => {
               <div className="space-y-6">
                 <Card className="p-6">
                   <h2 className="text-xl font-semibold mb-4">Récapitulatif</h2>
-                  
+
                   <div className="space-y-3">
                     <div className="flex justify-between">
                       <span>Sous-total</span>
                       <span>{subtotal.toFixed(2)}€</span>
                     </div>
-                    
+
                     <div className="flex justify-between">
                       <span>Livraison</span>
-                      <span>{shipping === 0 ? 'Gratuite' : `${shipping}€`}</span>
+                      <span>
+                        {shipping === 0 ? "Gratuite" : `${shipping}€`}
+                      </span>
                     </div>
-                    
+
                     <Separator />
-                    
+
                     <div className="flex justify-between font-semibold text-lg">
                       <span>Total</span>
                       <span>{total.toFixed(2)}€</span>
                     </div>
                   </div>
-                  
+
                   <div className="mt-6 space-y-3">
                     <div className="flex gap-2">
                       <Input
@@ -277,9 +310,9 @@ const Cart = () => {
                         Appliquer
                       </Button>
                     </div>
-                    
-                    <Button 
-                      className="w-full" 
+
+                    <Button
+                      className="w-full"
                       size="lg"
                       onClick={() => setCurrentStep(2)}
                       disabled={cartItems.length === 0}
@@ -316,7 +349,9 @@ const Cart = () => {
                         </span>
                       </div>
                       <CardContent className="p-4">
-                        <h3 className="font-semibold text-lg mb-2">{product.name}</h3>
+                        <h3 className="font-semibold text-lg mb-2">
+                          {product.name}
+                        </h3>
                         <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
                           {product.description}
                         </p>
@@ -336,7 +371,7 @@ const Cart = () => {
                             <p className="text-sm font-medium">Saveurs:</p>
                             <div className="flex flex-wrap gap-1">
                               {product.variants.map((variant, index) => (
-                                <span 
+                                <span
                                   key={index}
                                   className="text-xs px-2 py-1 bg-gray-100 rounded-full"
                                 >
@@ -370,90 +405,155 @@ const Cart = () => {
             >
               {/* Left Column - Billing Information */}
               <Card className="p-6">
-                <h3 className="text-xl font-semibold mb-6">Informations de facturation</h3>
+                <h3 className="text-xl font-semibold mb-6">
+                  Informations de facturation
+                </h3>
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium mb-2">Prénom *</label>
-                      <Input 
+                      <label className="block text-sm font-medium mb-2">
+                        Prénom *
+                      </label>
+                      <Input
                         value={checkoutForm.firstName}
-                        onChange={(e) => setCheckoutForm({...checkoutForm, firstName: e.target.value})}
-                        required 
+                        onChange={(e) =>
+                          setCheckoutForm({
+                            ...checkoutForm,
+                            firstName: e.target.value,
+                          })
+                        }
+                        required
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">Nom *</label>
-                      <Input 
+                      <label className="block text-sm font-medium mb-2">
+                        Nom *
+                      </label>
+                      <Input
                         value={checkoutForm.lastName}
-                        onChange={(e) => setCheckoutForm({...checkoutForm, lastName: e.target.value})}
-                        required 
+                        onChange={(e) =>
+                          setCheckoutForm({
+                            ...checkoutForm,
+                            lastName: e.target.value,
+                          })
+                        }
+                        required
                       />
                     </div>
                   </div>
-                  
+
                   <div>
-                    <label className="block text-sm font-medium mb-2">Adresse e-mail *</label>
-                    <Input 
+                    <label className="block text-sm font-medium mb-2">
+                      Adresse e-mail *
+                    </label>
+                    <Input
                       type="email"
                       value={checkoutForm.email}
-                      onChange={(e) => setCheckoutForm({...checkoutForm, email: e.target.value})}
-                      required 
+                      onChange={(e) =>
+                        setCheckoutForm({
+                          ...checkoutForm,
+                          email: e.target.value,
+                        })
+                      }
+                      required
                     />
                   </div>
-                  
+
                   <div>
-                    <label className="block text-sm font-medium mb-2">Téléphone *</label>
-                    <Input 
+                    <label className="block text-sm font-medium mb-2">
+                      Téléphone *
+                    </label>
+                    <Input
                       type="tel"
                       value={checkoutForm.phone1}
-                      onChange={(e) => setCheckoutForm({...checkoutForm, phone1: e.target.value})}
-                      required 
+                      onChange={(e) =>
+                        setCheckoutForm({
+                          ...checkoutForm,
+                          phone1: e.target.value,
+                        })
+                      }
+                      required
                     />
                   </div>
-                  
+
                   <div>
-                    <label className="block text-sm font-medium mb-2">Pays *</label>
-                    <Input 
+                    <label className="block text-sm font-medium mb-2">
+                      Pays *
+                    </label>
+                    <Input
                       value={checkoutForm.country}
-                      onChange={(e) => setCheckoutForm({...checkoutForm, country: e.target.value})}
-                      required 
+                      onChange={(e) =>
+                        setCheckoutForm({
+                          ...checkoutForm,
+                          country: e.target.value,
+                        })
+                      }
+                      required
                     />
                   </div>
-                  
+
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium mb-2">Gouvernorat *</label>
-                      <Input 
+                      <label className="block text-sm font-medium mb-2">
+                        Gouvernorat *
+                      </label>
+                      <Input
                         value={checkoutForm.governorate}
-                        onChange={(e) => setCheckoutForm({...checkoutForm, governorate: e.target.value})}
-                        required 
+                        onChange={(e) =>
+                          setCheckoutForm({
+                            ...checkoutForm,
+                            governorate: e.target.value,
+                          })
+                        }
+                        required
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">Délégation *</label>
-                      <Input 
+                      <label className="block text-sm font-medium mb-2">
+                        Délégation *
+                      </label>
+                      <Input
                         value={checkoutForm.delegation}
-                        onChange={(e) => setCheckoutForm({...checkoutForm, delegation: e.target.value})}
-                        required 
+                        onChange={(e) =>
+                          setCheckoutForm({
+                            ...checkoutForm,
+                            delegation: e.target.value,
+                          })
+                        }
+                        required
                       />
                     </div>
                   </div>
-                  
+
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium mb-2">Localité *</label>
-                      <Input 
+                      <label className="block text-sm font-medium mb-2">
+                        Localité *
+                      </label>
+                      <Input
                         value={checkoutForm.locality}
-                        onChange={(e) => setCheckoutForm({...checkoutForm, locality: e.target.value})}
-                        required 
+                        onChange={(e) =>
+                          setCheckoutForm({
+                            ...checkoutForm,
+                            locality: e.target.value,
+                          })
+                        }
+                        required
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">Code postal *</label>
-                      <Input 
+                      <label className="block text-sm font-medium mb-2">
+                        Code postal *
+                      </label>
+                      <Input
                         value={checkoutForm.postalCode}
-                        onChange={(e) => setCheckoutForm({...checkoutForm, postalCode: e.target.value})}
-                        required 
+                        onChange={(e) =>
+                          setCheckoutForm({
+                            ...checkoutForm,
+                            postalCode: e.target.value,
+                          })
+                        }
+                        required
                       />
                     </div>
                   </div>
@@ -467,9 +567,16 @@ const Cart = () => {
                   <h3 className="text-xl font-semibold mb-4">Votre commande</h3>
                   <div className="space-y-3">
                     {cartItems.map((item) => (
-                      <div key={item.id} className="flex justify-between items-center">
-                        <span className="text-sm">{item.name} × {item.quantity}</span>
-                        <span className="font-medium">{(item.price * item.quantity).toFixed(2)} €</span>
+                      <div
+                        key={item.id}
+                        className="flex justify-between items-center"
+                      >
+                        <span className="text-sm">
+                          {item.name} × {item.quantity}
+                        </span>
+                        <span className="font-medium">
+                          {(item.price * item.quantity).toFixed(2)} €
+                        </span>
                       </div>
                     ))}
                     <Separator />
@@ -482,14 +589,16 @@ const Cart = () => {
 
                 {/* Payment Method */}
                 <Card className="p-6">
-                  <h3 className="text-xl font-semibold mb-4">Mode de paiement</h3>
+                  <h3 className="text-xl font-semibold mb-4">
+                    Mode de paiement
+                  </h3>
                   <div className="space-y-3">
                     <label className="flex items-center space-x-3 cursor-pointer">
                       <input
                         type="radio"
                         name="payment"
                         value="card"
-                        checked={paymentMethod === 'card'}
+                        checked={paymentMethod === "card"}
                         onChange={(e) => setPaymentMethod(e.target.value)}
                         className="w-4 h-4"
                       />
@@ -500,7 +609,7 @@ const Cart = () => {
                         type="radio"
                         name="payment"
                         value="paypal"
-                        checked={paymentMethod === 'paypal'}
+                        checked={paymentMethod === "paypal"}
                         onChange={(e) => setPaymentMethod(e.target.value)}
                         className="w-4 h-4"
                       />
@@ -511,7 +620,7 @@ const Cart = () => {
                         type="radio"
                         name="payment"
                         value="transfer"
-                        checked={paymentMethod === 'transfer'}
+                        checked={paymentMethod === "transfer"}
                         onChange={(e) => setPaymentMethod(e.target.value)}
                         className="w-4 h-4"
                       />
@@ -530,7 +639,7 @@ const Cart = () => {
                       className="w-4 h-4 mt-1"
                     />
                     <span className="text-sm">
-                      J'ai lu et j'accepte les{' '}
+                      J'ai lu et j'accepte les{" "}
                       <a href="#" className="text-blue-600 hover:underline">
                         conditions générales de vente
                       </a>
@@ -540,7 +649,7 @@ const Cart = () => {
 
                 {/* Action Buttons */}
                 <div className="flex gap-4">
-                  <Button 
+                  <Button
                     variant="outline"
                     onClick={() => setCurrentStep(1)}
                     className="flex-1"
@@ -548,7 +657,7 @@ const Cart = () => {
                     <ArrowLeft className="w-4 h-4 mr-2" />
                     Retour
                   </Button>
-                  <Button 
+                  <Button
                     className="flex-1"
                     onClick={() => setCurrentStep(3)}
                     disabled={!agreedToTerms}
@@ -575,7 +684,12 @@ const Cart = () => {
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ delay: 0.2, duration: 0.5, type: "spring", stiffness: 200 }}
+                  transition={{
+                    delay: 0.2,
+                    duration: 0.5,
+                    type: "spring",
+                    stiffness: 200,
+                  }}
                   className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center"
                 >
                   <svg
@@ -605,7 +719,8 @@ const Cart = () => {
                   Commande confirmée !
                 </h1>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                  Merci pour votre commande. Nous avons bien reçu votre demande et nous la traiterons dans les plus brefs délais.
+                  Merci pour votre commande. Nous avons bien reçu votre demande
+                  et nous la traiterons dans les plus brefs délais.
                 </p>
               </motion.div>
 
@@ -618,28 +733,42 @@ const Cart = () => {
                 <Card className="p-8 max-w-2xl mx-auto text-left">
                   <div className="space-y-6">
                     <div className="flex justify-between items-center border-b pb-4">
-                      <h3 className="text-xl font-semibold">Détails de la commande</h3>
+                      <h3 className="text-xl font-semibold">
+                        Détails de la commande
+                      </h3>
                       <span className="text-sm text-gray-500">
-                        Commande #{Math.random().toString(36).substr(2, 9).toUpperCase()}
+                        Commande #
+                        {Math.random().toString(36).substr(2, 9).toUpperCase()}
                       </span>
                     </div>
 
                     {/* Customer Information */}
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
-                        <h4 className="font-medium text-gray-900 mb-2">Informations client</h4>
+                        <h4 className="font-medium text-gray-900 mb-2">
+                          Informations client
+                        </h4>
                         <div className="space-y-1 text-sm text-gray-600">
-                          <p>{checkoutForm.firstName} {checkoutForm.lastName}</p>
+                          <p>
+                            {checkoutForm.firstName} {checkoutForm.lastName}
+                          </p>
                           <p>{checkoutForm.email}</p>
                           <p>{checkoutForm.phone1}</p>
                         </div>
                       </div>
                       <div>
-                        <h4 className="font-medium text-gray-900 mb-2">Adresse de livraison</h4>
+                        <h4 className="font-medium text-gray-900 mb-2">
+                          Adresse de livraison
+                        </h4>
                         <div className="space-y-1 text-sm text-gray-600">
                           <p>{checkoutForm.locality}</p>
-                          <p>{checkoutForm.delegation}, {checkoutForm.governorate}</p>
-                          <p>{checkoutForm.country} {checkoutForm.postalCode}</p>
+                          <p>
+                            {checkoutForm.delegation},{" "}
+                            {checkoutForm.governorate}
+                          </p>
+                          <p>
+                            {checkoutForm.country} {checkoutForm.postalCode}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -648,20 +777,31 @@ const Cart = () => {
 
                     {/* Order Items */}
                     <div>
-                      <h4 className="font-medium text-gray-900 mb-3">Articles commandés</h4>
+                      <h4 className="font-medium text-gray-900 mb-3">
+                        Articles commandés
+                      </h4>
                       <div className="space-y-2">
                         {cartItems.map((item) => (
-                          <div key={item.id} className="flex justify-between items-center py-2">
+                          <div
+                            key={item.id}
+                            className="flex justify-between items-center py-2"
+                          >
                             <div className="flex items-center space-x-3">
                               <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
-                                <span className="text-xs font-medium">{item.name.charAt(0)}</span>
+                                <span className="text-xs font-medium">
+                                  {item.name.charAt(0)}
+                                </span>
                               </div>
                               <div>
                                 <p className="font-medium">{item.name}</p>
-                                <p className="text-sm text-gray-500">Quantité: {item.quantity}</p>
+                                <p className="text-sm text-gray-500">
+                                  Quantité: {item.quantity}
+                                </p>
                               </div>
                             </div>
-                            <span className="font-medium">{(item.price * item.quantity).toFixed(2)} €</span>
+                            <span className="font-medium">
+                              {(item.price * item.quantity).toFixed(2)} €
+                            </span>
                           </div>
                         ))}
                       </div>
@@ -678,7 +818,10 @@ const Cart = () => {
                     {/* Payment Method */}
                     <div className="bg-gray-50 p-4 rounded-lg">
                       <p className="text-sm text-gray-600">
-                        Mode de paiement: <span className="font-medium capitalize">{paymentMethod}</span>
+                        Mode de paiement:{" "}
+                        <span className="font-medium capitalize">
+                          {paymentMethod}
+                        </span>
                       </p>
                     </div>
                   </div>
@@ -693,9 +836,14 @@ const Cart = () => {
                 className="space-y-6"
               >
                 <div className="bg-blue-50 p-6 rounded-lg">
-                  <h4 className="font-semibold text-blue-900 mb-2">Que se passe-t-il maintenant ?</h4>
+                  <h4 className="font-semibold text-blue-900 mb-2">
+                    Que se passe-t-il maintenant ?
+                  </h4>
                   <div className="text-sm text-blue-800 space-y-2">
-                    <p>• Vous recevrez un email de confirmation dans les prochaines minutes</p>
+                    <p>
+                      • Vous recevrez un email de confirmation dans les
+                      prochaines minutes
+                    </p>
                     <p>• Notre équipe traitera votre commande sous 24-48h</p>
                     <p>• Vous serez contacté pour organiser la livraison</p>
                     <p>• Un suivi de commande vous sera envoyé par email</p>
@@ -712,7 +860,7 @@ const Cart = () => {
                     Nouvelle commande
                   </Button>
                   <Button
-                    onClick={() => window.location.href = '/'}
+                    onClick={() => (window.location.href = "/")}
                     className="px-8 py-3"
                   >
                     Retour à l'accueil
@@ -731,12 +879,18 @@ const Cart = () => {
                   Une question sur votre commande ?
                 </p>
                 <p className="text-sm text-gray-500">
-                  Contactez-nous au{' '}
-                  <a href="tel:+21612345678" className="text-blue-600 hover:underline font-medium">
+                  Contactez-nous au{" "}
+                  <a
+                    href="tel:+21612345678"
+                    className="text-blue-600 hover:underline font-medium"
+                  >
                     +216 12 345 678
-                  </a>
-                  {' '}ou par email à{' '}
-                  <a href="mailto:contact@sobitas.com" className="text-blue-600 hover:underline font-medium">
+                  </a>{" "}
+                  ou par email à{" "}
+                  <a
+                    href="mailto:contact@sobitas.com"
+                    className="text-blue-600 hover:underline font-medium"
+                  >
                     contact@sobitas.com
                   </a>
                 </p>

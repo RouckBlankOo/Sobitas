@@ -1,6 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
+import {
+  Facebook,
+  Instagram,
+  Twitter,
+  Youtube,
+  Shield,
+  CreditCard,
+} from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { smoothScrollTo } from "@/lib/utils";
 
@@ -9,12 +16,16 @@ const Footer = () => {
   const navigate = useNavigate();
 
   // Smooth scrolling navigation handler
-  const handleSmoothNavigation = (e: React.MouseEvent, path: string, sectionId?: string) => {
+  const handleSmoothNavigation = (
+    e: React.MouseEvent,
+    path: string,
+    sectionId?: string
+  ) => {
     e.preventDefault();
-    
-    if (sectionId && (location.pathname === '/' || path === '/')) {
-      if (location.pathname !== '/') {
-        navigate('/');
+
+    if (sectionId && (location.pathname === "/" || path === "/")) {
+      if (location.pathname !== "/") {
+        navigate("/");
         setTimeout(() => {
           smoothScrollTo(sectionId, 90);
         }, 100);
@@ -69,7 +80,9 @@ const Footer = () => {
               <li>
                 <a
                   href="/products"
-                  onClick={(e) => handleSmoothNavigation(e, "/products", "produits")}
+                  onClick={(e) =>
+                    handleSmoothNavigation(e, "/products", "produits")
+                  }
                   className="text-gray-600 hover:text-red-600 transition-smooth cursor-pointer"
                 >
                   Produits
@@ -78,7 +91,9 @@ const Footer = () => {
               <li>
                 <a
                   href="/about"
-                  onClick={(e) => handleSmoothNavigation(e, "/about", "a-propos")}
+                  onClick={(e) =>
+                    handleSmoothNavigation(e, "/about", "a-propos")
+                  }
                   className="text-gray-600 hover:text-red-600 transition-smooth cursor-pointer"
                 >
                   À Propos
@@ -145,11 +160,38 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-gray-200 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-600 text-sm mb-4 md:mb-0">
-              © 2025 inoveralab. Tous droits réservés.
-            </p>
+        <div className="border-t border-gray-200 pt-8 mt-12">
+          <div className="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
+            <div className="flex flex-col items-center lg:items-start space-y-2">
+              <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                <p className="text-gray-600 text-sm">
+                  © 2025 Sobitas. Tous droits réservés.
+                </p>
+                <div className="flex space-x-4 text-sm">
+                  <Link
+                    to="/privacy"
+                    className="text-gray-600 hover:text-red-600 transition-smooth"
+                  >
+                    Confidentialité
+                  </Link>
+                  <Link
+                    to="/terms"
+                    className="text-gray-600 hover:text-red-600 transition-smooth"
+                  >
+                    CGU
+                  </Link>
+                  <Link
+                    to="/cookies"
+                    className="text-gray-600 hover:text-red-600 transition-smooth"
+                  >
+                    Cookies
+                  </Link>
+                </div>
+              </div>
+              <p className="text-gray-400 text-xs opacity-60">
+                Powered by <span className="text-gray-500">BreakNRoot</span>
+              </p>
+            </div>
             <div className="flex items-center space-x-4">
               <a
                 href="https://www.facebook.com/sobitass"

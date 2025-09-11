@@ -74,12 +74,12 @@ const Hero = () => {
             </motion.div>
           </motion.div>
 
-          {/* Title - AFTER LOGO */}
+          {/* Title - AFTER LOGO AND PRODUCTS */}
           <motion.h1
             className="text-5xl md:text-7xl font-bold mb-6"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4 }}
+            transition={{ duration: 1, delay: 0.6 }}
           >
             <span className="text-gradient">Suppléments</span>
             <br />
@@ -91,7 +91,7 @@ const Hero = () => {
             className="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.6 }}
+            transition={{ duration: 1, delay: 0.8 }}
           >
             Alimentez votre parcours fitness avec des suppléments et équipements
             de qualité professionnelle conçus pour les champions.
@@ -102,7 +102,7 @@ const Hero = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.8 }}
+            transition={{ duration: 1, delay: 1.0 }}
           >
             <Button
               asChild

@@ -1,7 +1,15 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, ShoppingCart, ChevronDown, ChevronRight } from "lucide-react";
+import {
+  Menu,
+  ShoppingCart,
+  ChevronDown,
+  ChevronRight,
+  User,
+  LogOut,
+  BarChart3,
+} from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import SobitasLogo from "@/assets/Sobitas2.png";
 import { smoothScrollTo } from "@/lib/utils";
@@ -15,15 +23,41 @@ const Navigation = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Authentication state
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("isLoggedIn") === "true"
+  );
+
+  // Update auth state when localStorage changes
+  useEffect(() => {
+    const checkAuth = () => {
+      setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true");
+    };
+
+    window.addEventListener("storage", checkAuth);
+    return () => window.removeEventListener("storage", checkAuth);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userType");
+    setIsLoggedIn(false);
+    navigate("/");
+  };
+
   // Smooth scrolling navigation handler
-  const handleSmoothNavigation = (e: React.MouseEvent, path: string, sectionId?: string) => {
+  const handleSmoothNavigation = (
+    e: React.MouseEvent,
+    path: string,
+    sectionId?: string
+  ) => {
     e.preventDefault();
-    
+
     // If we're navigating to a section on the home page
-    if (sectionId && (location.pathname === '/' || path === '/')) {
-      if (location.pathname !== '/') {
+    if (sectionId && (location.pathname === "/" || path === "/")) {
+      if (location.pathname !== "/") {
         // Navigate to home first, then scroll
-        navigate('/');
+        navigate("/");
         setTimeout(() => {
           smoothScrollTo(sectionId, 90);
         }, 100);
@@ -367,8 +401,8 @@ const Navigation = () => {
             </div>
           </div>
 
-          {/* Desktop Cart and CTA */}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* Desktop Navigation Actions */}
+          <div className="hidden md:flex items-center space-x-3">
             <Button
               asChild
               variant="ghost"
@@ -380,9 +414,47 @@ const Navigation = () => {
                 <ShoppingCart className="h-5 w-5" />
               </Link>
             </Button>
-            <Button asChild className={ctaButtonStyles}>
-              <Link to="/shop">Acheter Maintenant</Link>
-            </Button>
+
+            {isLoggedIn ? (
+              <>
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="sm"
+                  className="text-foreground hover:text-primary"
+                  aria-label="Dashboard"
+                >
+                  <Link to="/dashboard">
+                    <BarChart3 className="h-5 w-5" />
+                  </Link>
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleLogout}
+                  className="text-foreground hover:text-red-600"
+                  aria-label="Se déconnecter"
+                >
+                  <LogOut className="h-5 w-5" />
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="sm"
+                  className="text-white hover:text-primary"
+                >
+                  <Link to="/login">Se connecter</Link>
+                </Button>
+
+                <Button asChild className={ctaButtonStyles}>
+                  <Link to="/register">S'inscrire</Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile menu */}
@@ -498,7 +570,9 @@ const Navigation = () => {
                     className={`text-lg text-foreground hover:text-primary transition-smooth px-4 py-2 cursor-pointer ${
                       location.pathname === "/about" ? "text-primary" : ""
                     }`}
-                    onClick={(e) => handleSmoothNavigation(e, "/about", "a-propos")}
+                    onClick={(e) =>
+                      handleSmoothNavigation(e, "/about", "a-propos")
+                    }
                   >
                     À Propos
                   </a>
@@ -519,24 +593,72 @@ const Navigation = () => {
                     Contact
                   </Link>
 
-                  {/* Mobile Cart and CTA */}
-                  <div className="flex items-center justify-between px-4 py-4 border-t border-border mt-6">
+                  {/* Mobile Authentication & Actions */}
+                  <div className="px-4 py-4 border-t border-border mt-6 space-y-4">
+                    {/* Cart */}
                     <Button
                       asChild
                       variant="ghost"
                       size="sm"
-                      className={cartButtonStyles}
+                      className={`${cartButtonStyles} w-full justify-start`}
                       aria-label="Voir le panier"
                     >
                       <Link to="/cart" onClick={() => setIsOpen(false)}>
-                        <ShoppingCart className="h-5 w-5" />
+                        <ShoppingCart className="h-5 w-5 mr-2" />
+                        Mon Panier
                       </Link>
                     </Button>
-                    <Button asChild className={ctaButtonStyles}>
-                      <Link to="/shop" onClick={() => setIsOpen(false)}>
-                        Acheter Maintenant
-                      </Link>
-                    </Button>
+
+                    {isLoggedIn ? (
+                      <div className="space-y-2">
+                        <Button
+                          asChild
+                          variant="ghost"
+                          size="sm"
+                          className="w-full justify-start text-foreground hover:text-primary"
+                        >
+                          <Link
+                            to="/dashboard"
+                            onClick={() => setIsOpen(false)}
+                          >
+                            <BarChart3 className="h-5 w-5 mr-2" />
+                            Dashboard
+                          </Link>
+                        </Button>
+
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => {
+                            handleLogout();
+                            setIsOpen(false);
+                          }}
+                          className="w-full justify-start text-foreground hover:text-red-600"
+                        >
+                          <LogOut className="h-5 w-5 mr-2" />
+                          Se déconnecter
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="space-y-2">
+                        <Button
+                          asChild
+                          variant="ghost"
+                          size="sm"
+                          className="w-full justify-start text-foreground hover:text-primary"
+                        >
+                          <Link to="/login" onClick={() => setIsOpen(false)}>
+                            Se connecter
+                          </Link>
+                        </Button>
+
+                        <Button asChild className={`${ctaButtonStyles} w-full`}>
+                          <Link to="/register" onClick={() => setIsOpen(false)}>
+                            S'inscrire
+                          </Link>
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </SheetContent>
