@@ -58,7 +58,6 @@ const Cart = () => {
     orderNotes: "",
   });
 
-  const [paymentMethod, setPaymentMethod] = useState("delivery");
   const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   // Recommended products
@@ -582,7 +581,7 @@ const Cart = () => {
                 </div>
               </Card>
 
-              {/* Right Column - Order Summary & Payment */}
+              {/* Right Column - Order Summary */}
               <div className="space-y-6">
                 {/* Order Summary */}
                 <Card className="p-6">
@@ -599,46 +598,6 @@ const Cart = () => {
                       <span>Total</span>
                       <span>{total.toFixed(2)} €</span>
                     </div>
-                  </div>
-                </Card>
-
-                {/* Payment Method */}
-                <Card className="p-6">
-                  <h3 className="text-xl font-semibold mb-4">Mode de paiement</h3>
-                  <div className="space-y-3">
-                    <label className="flex items-center space-x-3 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="payment"
-                        value="card"
-                        checked={paymentMethod === 'card'}
-                        onChange={(e) => setPaymentMethod(e.target.value)}
-                        className="w-4 h-4"
-                      />
-                      <span>Carte bancaire</span>
-                    </label>
-                    <label className="flex items-center space-x-3 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="payment"
-                        value="paypal"
-                        checked={paymentMethod === 'paypal'}
-                        onChange={(e) => setPaymentMethod(e.target.value)}
-                        className="w-4 h-4"
-                      />
-                      <span>PayPal</span>
-                    </label>
-                    <label className="flex items-center space-x-3 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="payment"
-                        value="transfer"
-                        checked={paymentMethod === 'transfer'}
-                        onChange={(e) => setPaymentMethod(e.target.value)}
-                        className="w-4 h-4"
-                      />
-                      <span>Virement bancaire</span>
-                    </label>
                   </div>
                 </Card>
 
@@ -785,12 +744,7 @@ const Cart = () => {
                       <span className="text-2xl">{total.toFixed(2)} €</span>
                     </div>
 
-                    {/* Payment Method */}
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <p className="text-sm text-gray-600">
-                        Mode de paiement: <span className="font-medium capitalize">{paymentMethod}</span>
-                      </p>
-                    </div>
+
                   </div>
                 </Card>
               </motion.div>
