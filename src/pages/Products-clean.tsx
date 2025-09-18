@@ -18,7 +18,7 @@ const Products = () => {
   const [sortOption, setSortOption] = useState<
     "relevance" | "price-asc" | "price-desc" | "rating"
   >("relevance");
-  
+
   const { addToCart } = useCart();
   const { products, loading, error } = useProducts();
   const navigate = useNavigate();
@@ -55,8 +55,8 @@ const Products = () => {
       return products.filter((p) => p.isBestSeller);
     if (selectedCategory === "new")
       return products.filter((p) => p.isNewProduct || p.isBestSeller);
-    return products.filter((product) => 
-      typeof product.category === 'string' 
+    return products.filter((product) =>
+      typeof product.category === "string"
         ? product.category === selectedCategory
         : product.category?.slug === selectedCategory
     );
@@ -66,9 +66,10 @@ const Products = () => {
     let list = [...filteredProducts];
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
-      list = list.filter((p) => 
-        p.title.toLowerCase().includes(q) ||
-        p.designation.toLowerCase().includes(q)
+      list = list.filter(
+        (p) =>
+          p.title.toLowerCase().includes(q) ||
+          p.designation.toLowerCase().includes(q)
       );
     }
     if (sortOption === "price-asc") list.sort((a, b) => a.price - b.price);
@@ -85,7 +86,7 @@ const Products = () => {
       id: product.id,
       name: product.title,
       image: product.mainImage?.url || "/placeholder.svg",
-      price: product.price
+      price: product.price,
     });
   };
 
@@ -244,7 +245,7 @@ const Products = () => {
                       src={product.mainImage?.url || "/placeholder.svg"}
                       alt={product.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      onClick={() => navigate(`/product/${product.slug}`)}
+                      onClick={() => navigate(`/product/${product.id}`)}
                     />
                   </div>
                   {product.oldPrice && product.oldPrice > product.price && (
@@ -268,7 +269,7 @@ const Products = () => {
                   <div className="mb-4">
                     <h3
                       className="font-semibold text-lg mb-2 line-clamp-2 text-gray-900 cursor-pointer hover:text-blue-600 transition-colors"
-                      onClick={() => navigate(`/product/${product.slug}`)}
+                      onClick={() => navigate(`/product/${product.id}`)}
                     >
                       {product.title}
                     </h3>
