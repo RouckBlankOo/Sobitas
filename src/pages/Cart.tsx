@@ -17,8 +17,6 @@ import {
   Check,
   Package,
   CreditCard,
-  Lock,
-  ArrowLeft,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -61,9 +59,6 @@ const Cart = () => {
   });
 
   const [agreedToTerms, setAgreedToTerms] = useState(false);
-
-  // Payment method state
-  const [paymentMethod, setPaymentMethod] = useState("delivery");
 
   // Recommended products
   const recommendedProducts = [
@@ -659,107 +654,6 @@ const Cart = () => {
                       <span>Total</span>
                       <span>{total.toFixed(2)} €</span>
                     </div>
-                  </div>
-                </Card>
-
-                {/* Payment Method */}
-                <Card className="p-6">
-                  <h3 className="text-xl font-semibold mb-4">
-                    Mode de paiement
-                  </h3>
-                  <div className="space-y-4">
-                    <label className="flex items-center space-x-3 cursor-pointer p-3 border rounded-lg hover:bg-gray-50 transition-colors">
-                      <input
-                        type="radio"
-                        name="payment"
-                        value="card"
-                        checked={paymentMethod === "card"}
-                        onChange={(e) => setPaymentMethod(e.target.value)}
-                        className="w-4 h-4"
-                      />
-                      <CreditCard className="w-5 h-5 text-gray-600" />
-                      <span className="flex-1">Carte bancaire</span>
-                      <div className="flex space-x-1">
-                        <div className="w-8 h-5 bg-blue-600 rounded text-white text-xs flex items-center justify-center font-bold">
-                          VISA
-                        </div>
-                        <div className="w-8 h-5 bg-red-500 rounded text-white text-xs flex items-center justify-center font-bold">
-                          MC
-                        </div>
-                        <div className="w-8 h-5 bg-gray-800 rounded text-white text-xs flex items-center justify-center font-bold">
-                          AE
-                        </div>
-                      </div>
-                    </label>
-
-                    {/* Card Payment Form - Shows when card is selected */}
-                    {paymentMethod === "card" && (
-                      <div className="border rounded-lg p-4 bg-blue-50">
-                        <p className="text-sm text-blue-800 mb-4 flex items-center">
-                          <Lock className="w-4 h-4 mr-2" />
-                          Payez avec votre carte bancaire à travers le service
-                          ClicToPay et bénéficiez de 25 Points de Fidélité et
-                          d'une livraison gratuite.
-                        </p>
-                        <div className="space-y-4">
-                          <div>
-                            <label className="block text-sm font-medium mb-2">
-                              Numéro de carte *
-                            </label>
-                            <Input
-                              type="text"
-                              placeholder="1234 5678 9012 3456"
-                              className="w-full"
-                            />
-                          </div>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <label className="block text-sm font-medium mb-2">
-                                Date d'expiration *
-                              </label>
-                              <Input
-                                type="text"
-                                placeholder="MM/AA"
-                                className="w-full"
-                              />
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium mb-2">
-                                CVV *
-                              </label>
-                              <Input
-                                type="text"
-                                placeholder="123"
-                                className="w-full"
-                              />
-                            </div>
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium mb-2">
-                              Nom sur la carte *
-                            </label>
-                            <Input
-                              type="text"
-                              placeholder="JOHN DOE"
-                              className="w-full"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    <label className="flex items-center space-x-3 cursor-pointer p-3 border rounded-lg hover:bg-gray-50 transition-colors">
-                      <input
-                        type="radio"
-                        name="payment"
-                        value="delivery"
-                        checked={paymentMethod === "delivery"}
-                        onChange={(e) => setPaymentMethod(e.target.value)}
-                        className="w-4 h-4"
-                      />
-                      <Package className="w-5 h-5 text-gray-600" />
-                      <span>Paiement à la livraison</span>
-                    </label>
                   </div>
                 </Card>
 
