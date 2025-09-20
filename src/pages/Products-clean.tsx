@@ -139,7 +139,7 @@ const Products = () => {
               onClick={() => setSelectedCategory("all")}
               className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
                 selectedCategory === "all"
-                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
+                  ? "bg-gradient-to-r from-red-600 to-black text-white shadow-lg"
                   : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-200"
               }`}
             >
@@ -160,7 +160,7 @@ const Products = () => {
                   className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
                     selectedCategory === category.value ||
                     category.sub?.some((sub) => sub.value === selectedCategory)
-                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
+                      ? "bg-gradient-to-r from-red-600 to-black text-white shadow-lg"
                       : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-200"
                   }`}
                 >
@@ -181,7 +181,7 @@ const Products = () => {
                         }}
                         className={`block w-full text-left px-4 py-2 rounded-md transition-colors ${
                           selectedCategory === subCategory.value
-                            ? "bg-blue-50 text-blue-700"
+                            ? "bg-red-50 text-red-700"
                             : "text-gray-700 hover:bg-gray-50"
                         }`}
                       >
@@ -291,7 +291,7 @@ const Products = () => {
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-2xl font-bold text-blue-600">
+                      <span className="text-2xl font-bold text-red-600">
                         {product.price} {product.currency}
                       </span>
                       {product.oldPrice && product.oldPrice > product.price && (
@@ -305,7 +305,7 @@ const Products = () => {
                     className={`w-full ${
                       product.quantity === 0
                         ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                        : "bg-gradient-to-r from-red-600 to-black hover:from-red-700 hover:to-gray-900"
                     } text-white`}
                     disabled={product.quantity === 0}
                     onClick={() => {
