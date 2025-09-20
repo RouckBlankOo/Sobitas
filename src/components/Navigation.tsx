@@ -467,7 +467,7 @@ const Navigation = () => {
                   className="text-foreground hover:text-primary p-2"
                   aria-label="Ouvrir le menu"
                 >
-                  <Menu className="h-6 w-6" />
+                  <Menu className="h-6 w-6 text-red-500" />
                 </Button>
               </SheetTrigger>
               <SheetContent
