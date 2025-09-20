@@ -35,21 +35,23 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 pt-20">
-      <div className="max-w-md mx-auto px-4 py-12">
+      <div className="max-w-md mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
           <Card className="shadow-xl border-0">
-            <CardHeader className="text-center pb-4">
-              <CardTitle className="text-2xl font-bold text-gray-800 mb-2">
+            <CardHeader className="text-center pb-4 px-4 sm:px-6">
+              <CardTitle className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">
                 Connexion
               </CardTitle>
-              <p className="text-gray-600">Accédez à votre espace personnel</p>
+              <p className="text-sm sm:text-base text-gray-600">
+                Accédez à votre espace personnel
+              </p>
             </CardHeader>
 
-            <CardContent className="px-6 pb-6">
+            <CardContent className="px-4 sm:px-6 pb-6">
               {/* User Type Toggle */}
 
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -60,7 +62,7 @@ const Login = () => {
                     required
                     value={formData.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
-                    className="h-12"
+                    className="h-11 sm:h-12 text-base"
                   />
                 </div>
 
@@ -73,13 +75,13 @@ const Login = () => {
                     onChange={(e) =>
                       handleInputChange("password", e.target.value)
                     }
-                    className="h-12 pr-12"
+                    className="h-11 sm:h-12 pr-12 text-base"
                   />
                   <Button
                     type="button"
                     variant="ghost"
                     size="sm"
-                    className="absolute right-0 top-0 h-12 w-12 px-3"
+                    className="absolute right-0 top-0 h-11 sm:h-12 w-11 sm:w-12 px-3"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
@@ -92,7 +94,7 @@ const Login = () => {
 
                 <Button
                   type="submit"
-                  className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium"
+                  className="w-full h-11 sm:h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium text-base"
                 >
                   Se connecter
                 </Button>

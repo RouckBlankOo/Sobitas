@@ -119,19 +119,19 @@ const Cart = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Progress Steps */}
         <motion.div
-          className="mb-12"
+          className="mb-8 sm:mb-12"
           initial={{ opacity: 0, y: -30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -30 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="flex items-center justify-center space-x-4 md:space-x-8">
+          <div className="flex items-center justify-center space-x-2 sm:space-x-4 md:space-x-8 overflow-x-auto pb-2">
             {/* Step 1 - Shopping Cart */}
-            <div className="flex items-center">
+            <div className="flex items-center flex-shrink-0">
               <div
-                className={`flex items-center justify-center w-10 h-10 rounded-full font-semibold ${
+                className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full font-semibold text-sm ${
                   currentStep >= 1
                     ? "bg-primary text-white"
                     : "bg-muted text-muted-foreground"
@@ -140,24 +140,31 @@ const Cart = () => {
                 1
               </div>
               <span
-                className={`ml-2 font-medium ${
+                className={`ml-2 font-medium text-sm sm:text-base ${
                   currentStep >= 1 ? "text-foreground" : "text-muted-foreground"
-                }`}
+                } hidden sm:inline`}
               >
                 Shopping Cart
+              </span>
+              <span
+                className={`ml-2 font-medium text-xs ${
+                  currentStep >= 1 ? "text-foreground" : "text-muted-foreground"
+                } sm:hidden`}
+              >
+                Panier
               </span>
             </div>
 
             <div
-              className={`flex-1 h-0.5 ${
+              className={`flex-1 h-0.5 mx-2 ${
                 currentStep >= 2 ? "bg-primary" : "bg-border"
               }`}
             ></div>
 
             {/* Step 2 - Shipping and Checkout */}
-            <div className="flex items-center">
+            <div className="flex items-center flex-shrink-0">
               <div
-                className={`flex items-center justify-center w-10 h-10 rounded-full font-semibold ${
+                className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full font-semibold text-sm ${
                   currentStep >= 2
                     ? "bg-primary text-white"
                     : "bg-muted text-muted-foreground"
@@ -166,24 +173,31 @@ const Cart = () => {
                 2
               </div>
               <span
-                className={`ml-2 font-medium ${
+                className={`ml-2 font-medium text-sm sm:text-base ${
                   currentStep >= 2 ? "text-foreground" : "text-muted-foreground"
-                }`}
+                } hidden sm:inline`}
               >
                 Shipping and Checkout
+              </span>
+              <span
+                className={`ml-2 font-medium text-xs ${
+                  currentStep >= 2 ? "text-foreground" : "text-muted-foreground"
+                } sm:hidden`}
+              >
+                Livraison
               </span>
             </div>
 
             <div
-              className={`flex-1 h-0.5 ${
+              className={`flex-1 h-0.5 mx-2 ${
                 currentStep >= 3 ? "bg-primary" : "bg-border"
               }`}
             ></div>
 
             {/* Step 3 - Confirmation */}
-            <div className="flex items-center">
+            <div className="flex items-center flex-shrink-0">
               <div
-                className={`flex items-center justify-center w-10 h-10 rounded-full font-semibold ${
+                className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full font-semibold text-sm ${
                   currentStep >= 3
                     ? "bg-primary text-white"
                     : "bg-muted text-muted-foreground"
@@ -192,11 +206,18 @@ const Cart = () => {
                 3
               </div>
               <span
-                className={`ml-2 font-medium ${
+                className={`ml-2 font-medium text-sm sm:text-base ${
                   currentStep >= 3 ? "text-foreground" : "text-muted-foreground"
-                }`}
+                } hidden sm:inline`}
               >
                 Confirmation
+              </span>
+              <span
+                className={`ml-2 font-medium text-xs ${
+                  currentStep >= 3 ? "text-foreground" : "text-muted-foreground"
+                } sm:hidden`}
+              >
+                Confirm
               </span>
             </div>
           </div>
@@ -205,10 +226,10 @@ const Cart = () => {
         {/* Content based on current step */}
         {currentStep === 1 ? (
           <>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8">
               {/* Left Column - Cart Items */}
               <motion.div
-                className="lg:col-span-2 space-y-6"
+                className="xl:col-span-2 space-y-4 sm:space-y-6"
                 initial={{ opacity: 0, x: -50 }}
                 animate={
                   isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }
@@ -240,69 +261,78 @@ const Cart = () => {
                         {cartItems.map((item) => (
                           <motion.div
                             key={item.id}
-                            className="flex items-center gap-4 p-4 border rounded-lg"
+                            className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 border rounded-lg"
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.5 }}
                           >
-                            {/* Product Image */}
-                            <div className="w-20 h-20 bg-muted rounded-lg flex items-center justify-center">
-                              <Package className="h-8 w-8 text-muted-foreground" />
+                            {/* Product Image and Info - Mobile Layout */}
+                            <div className="flex items-center gap-4 w-full sm:w-auto">
+                              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-muted rounded-lg flex items-center justify-center flex-shrink-0">
+                                <Package className="h-6 w-6 sm:h-8 sm:w-8 text-muted-foreground" />
+                              </div>
+
+                              {/* Product Info */}
+                              <div className="flex-1 sm:flex-initial">
+                                <h3 className="font-semibold text-foreground text-sm sm:text-base">
+                                  {item.name}
+                                </h3>
+                                <p className="text-xs sm:text-sm text-muted-foreground">
+                                  {item.inStock
+                                    ? "En stock"
+                                    : "Rupture de stock"}
+                                </p>
+                              </div>
                             </div>
 
-                            {/* Product Info */}
-                            <div className="flex-1">
-                              <h3 className="font-semibold text-foreground">
-                                {item.name}
-                              </h3>
-                              <p className="text-sm text-muted-foreground">
-                                {item.inStock ? "En stock" : "Rupture de stock"}
-                              </p>
-                            </div>
+                            {/* Controls Section - Mobile Layout */}
+                            <div className="flex items-center justify-between w-full sm:w-auto sm:flex-shrink-0 sm:gap-4">
+                              {/* Quantity Controls */}
+                              <div className="flex items-center gap-2">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() =>
+                                    updateQuantity(item.id, item.quantity - 1)
+                                  }
+                                  className="w-8 h-8 p-0"
+                                >
+                                  <Minus className="h-4 w-4" />
+                                </Button>
+                                <span className="w-12 text-center font-medium text-sm sm:text-base">
+                                  {item.quantity}
+                                </span>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() =>
+                                    updateQuantity(item.id, item.quantity + 1)
+                                  }
+                                  className="w-8 h-8 p-0"
+                                >
+                                  <Plus className="h-4 w-4" />
+                                </Button>
+                              </div>
 
-                            {/* Quantity Controls */}
-                            <div className="flex items-center gap-2">
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() =>
-                                  updateQuantity(item.id, item.quantity - 1)
-                                }
-                                className="w-8 h-8 p-0"
-                              >
-                                <Minus className="h-4 w-4" />
-                              </Button>
-                              <span className="w-12 text-center font-medium">
-                                {item.quantity}
-                              </span>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() =>
-                                  updateQuantity(item.id, item.quantity + 1)
-                                }
-                                className="w-8 h-8 p-0"
-                              >
-                                <Plus className="h-4 w-4" />
-                              </Button>
-                            </div>
+                              {/* Price and Remove */}
+                              <div className="flex items-center gap-3">
+                                <div className="text-right">
+                                  <p className="font-semibold text-foreground text-sm sm:text-base">
+                                    {item.price * item.quantity} TND
+                                  </p>
+                                </div>
 
-                            {/* Price */}
-                            <div className="text-right">
-                              <p className="font-semibold text-foreground">
-                                {item.price * item.quantity} TND
-                              </p>
+                                {/* Remove Button */}
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => removeItem(item.id)}
+                                  className="text-red-500 hover:text-red-700"
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </div>
                             </div>
-
-                            {/* Remove Button */}
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => removeItem(item.id)}
-                              className="text-red-500 hover:text-red-700"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
                           </motion.div>
                         ))}
                       </div>
@@ -645,14 +675,14 @@ const Cart = () => {
                           {item.name} × {item.quantity}
                         </span>
                         <span className="font-medium">
-                          {(item.price * item.quantity).toFixed(2)} €
+                          {(item.price * item.quantity).toFixed(2)} DT
                         </span>
                       </div>
                     ))}
                     <Separator />
                     <div className="flex justify-between items-center font-semibold text-lg">
                       <span>Total</span>
-                      <span>{total.toFixed(2)} €</span>
+                      <span>{total.toFixed(2)} DT</span>
                     </div>
                   </div>
                 </Card>
@@ -681,7 +711,7 @@ const Cart = () => {
                   onClick={() => setCurrentStep(3)}
                   disabled={!agreedToTerms}
                 >
-                  Commander - {total.toFixed(2)} €
+                  Commander - {total.toFixed(2)} DT
                 </Button>
               </div>
             </motion.div>
@@ -816,7 +846,7 @@ const Cart = () => {
                               </div>
                             </div>
                             <span className="font-medium">
-                              {(item.price * item.quantity).toFixed(2)} €
+                              {(item.price * item.quantity).toFixed(2)} DT
                             </span>
                           </div>
                         ))}
@@ -828,7 +858,7 @@ const Cart = () => {
                     {/* Total */}
                     <div className="flex justify-between items-center text-lg font-semibold">
                       <span>Total</span>
-                      <span className="text-2xl">{total.toFixed(2)} €</span>
+                      <span className="text-2xl">{total.toFixed(2)} DT</span>
                     </div>
                   </div>
                 </Card>

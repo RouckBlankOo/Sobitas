@@ -235,10 +235,10 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background pt-20" ref={ref}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Header Section */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
           initial={{ opacity: 0, y: -50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -50 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -270,10 +270,10 @@ const Contact = () => {
           </motion.p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 lg:gap-12">
           {/* Left Column - Stores and FAQ */}
           <motion.div
-            className="lg:col-span-2 space-y-12"
+            className="xl:col-span-2 space-y-8 sm:space-y-12"
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
@@ -293,7 +293,7 @@ const Contact = () => {
                 </h2>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-1">
+              <div className="grid grid-cols-1 gap-6">
                 {storeLocations.map((store, index) => (
                   <MotionCard
                     key={index}
@@ -301,7 +301,7 @@ const Contact = () => {
                     variants={cardVariants}
                     whileHover="hover"
                   >
-                    <CardContent className="p-6">
+                    <CardContent className="p-4 sm:p-6">
                       <h3 className="font-bold text-lg text-foreground mb-3">
                         {store.name}
                       </h3>
@@ -480,33 +480,38 @@ const Contact = () => {
                     </p>
                   </motion.div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">
-                        Nom*
-                      </label>
-                      <Input
-                        name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full focus:border-primary focus:ring-primary"
-                        placeholder="Votre nom"
-                      />
-                    </div>
+                  <form
+                    onSubmit={handleSubmit}
+                    className="space-y-4 sm:space-y-6"
+                  >
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-foreground mb-2">
+                          Nom*
+                        </label>
+                        <Input
+                          name="name"
+                          value={formData.name}
+                          onChange={handleInputChange}
+                          required
+                          className="w-full focus:border-primary focus:ring-primary"
+                          placeholder="Votre nom"
+                        />
+                      </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">
-                        Prénom*
-                      </label>
-                      <Input
-                        name="firstName"
-                        value={formData.firstName}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full focus:border-primary focus:ring-primary"
-                        placeholder="Votre prénom"
-                      />
+                      <div>
+                        <label className="block text-sm font-medium text-foreground mb-2">
+                          Prénom*
+                        </label>
+                        <Input
+                          name="firstName"
+                          value={formData.firstName}
+                          onChange={handleInputChange}
+                          required
+                          className="w-full focus:border-primary focus:ring-primary"
+                          placeholder="Votre prénom"
+                        />
+                      </div>
                     </div>
 
                     <div>

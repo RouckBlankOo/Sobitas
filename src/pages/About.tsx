@@ -48,14 +48,14 @@ const About = () => {
     >
       {/* Hero Section */}
       <motion.section
-        className="bg-gradient-to-r from-gray-900 to-black text-white py-20"
+        className="bg-gradient-to-r from-gray-900 to-black text-white py-12 sm:py-16 lg:py-20"
         initial={{ opacity: 0, y: 50 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
         transition={{ duration: 0.8 }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.h1
-            className="text-4xl md:text-6xl font-bold mb-6"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -63,7 +63,7 @@ const About = () => {
             À Propos de <span className="text-gradient">Sobitas</span>
           </motion.h1>
           <motion.p
-            className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
+            className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed px-4"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -75,17 +75,17 @@ const About = () => {
 
           {/* Floating Protein Products Animation */}
           <motion.div
-            className="flex justify-center items-center gap-0 mt-8 transform translate-y-4"
+            className="flex justify-center items-center gap-0 mt-6 sm:mt-8 transform translate-y-4"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
             {/* Whey Protein - Front Left */}
-            <motion.div className="z-20 -mr-8 md:-mr-12 lg:-mr-10 transform translate-y-8">
+            <motion.div className="z-20 -mr-4 sm:-mr-8 md:-mr-12 lg:-mr-10 transform translate-y-4 sm:translate-y-8">
               <motion.img
                 src={wheyImage}
                 alt="Whey Protein"
-                className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 object-contain opacity-90 hover:opacity-100 transition-opacity"
+                className="w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 object-contain opacity-90 hover:opacity-100 transition-opacity"
                 whileHover={{
                   scale: 1.1,
                   y: -15,
@@ -102,11 +102,11 @@ const About = () => {
             </motion.div>
 
             {/* Supplement - Center Behind */}
-            <motion.div className="z-10 -mx-6 md:-mx-8 lg:-mx-10">
+            <motion.div className="z-10 -mx-3 sm:-mx-6 md:-mx-8 lg:-mx-10">
               <motion.img
                 src={supplementImage}
                 alt="Supplement"
-                className="w-24 h-24 md:w-32 md:h-32 lg:w-36 lg:h-36 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                className="w-18 h-18 sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-36 lg:h-36 object-contain opacity-70 hover:opacity-100 transition-opacity"
                 whileHover={{
                   scale: 1.1,
                   y: -20,
@@ -123,11 +123,11 @@ const About = () => {
             </motion.div>
 
             {/* Combat Protein - Front Right */}
-            <motion.div className="z-20 -ml-8 md:-ml-10 lg:-ml-10 transform translate-y-10">
+            <motion.div className="z-20 -ml-4 sm:-ml-8 md:-ml-10 lg:-ml-10 transform translate-y-6 sm:translate-y-10">
               <motion.img
                 src={combatImage}
                 alt="Combat Protein"
-                className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 object-contain opacity-90 hover:opacity-100 transition-opacity"
+                className="w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 object-contain opacity-90 hover:opacity-100 transition-opacity"
                 whileHover={{
                   scale: 1.1,
                   y: -12,
@@ -147,14 +147,14 @@ const About = () => {
       </motion.section>
 
       {/* Story Section */}
-      <section className="py-20">
+      <section className="py-12 sm:py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div className="order-2 lg:order-1">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
                 Notre Histoire
               </h2>
-              <div className="space-y-4 text-lg text-gray-600 leading-relaxed">
+              <div className="space-y-4 text-base sm:text-lg text-gray-600 leading-relaxed">
                 <p>
                   Fondée en 2009, Sobitas a commencé comme un petit magasin
                   local avec une mission simple: fournir des suppléments de la
@@ -172,25 +172,43 @@ const About = () => {
                 </p>
               </div>
             </div>
-            <div className="relative">
-              <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-2xl p-8 text-white">
-                <h3 className="text-2xl font-bold mb-6">Nos Chiffres</h3>
-                <div className="grid grid-cols-2 gap-6">
+            <div className="relative order-1 lg:order-2">
+              <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-2xl p-6 sm:p-8 text-white">
+                <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
+                  Nos Chiffres
+                </h3>
+                <div className="grid grid-cols-2 gap-4 sm:gap-6">
                   <div className="text-center">
-                    <div className="text-3xl font-bold mb-2">500K+</div>
-                    <div className="text-red-100">Clients</div>
+                    <div className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2">
+                      500K+
+                    </div>
+                    <div className="text-red-100 text-sm sm:text-base">
+                      Clients
+                    </div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold mb-2">15+</div>
-                    <div className="text-red-100">Années</div>
+                    <div className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2">
+                      15+
+                    </div>
+                    <div className="text-red-100 text-sm sm:text-base">
+                      Années
+                    </div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold mb-2">300+</div>
-                    <div className="text-red-100">Produits</div>
+                    <div className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2">
+                      300+
+                    </div>
+                    <div className="text-red-100 text-sm sm:text-base">
+                      Produits
+                    </div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold mb-2">24</div>
-                    <div className="text-red-100">État</div>
+                    <div className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2">
+                      24
+                    </div>
+                    <div className="text-red-100 text-sm sm:text-base">
+                      État
+                    </div>
                   </div>
                 </div>
               </div>
@@ -200,33 +218,35 @@ const About = () => {
       </section>
 
       {/* Values Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
               Nos Valeurs
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
               Ce qui nous guide dans tout ce que nous faisons
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {values.map((value, index) => (
               <Card
                 key={index}
-                className="text-center hover:shadow-xl transition-smooth card-hover"
+                className="text-center hover:shadow-xl transition-smooth card-hover p-4 sm:p-6"
               >
-                <CardHeader>
-                  <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 text-red-600">
+                <CardHeader className="pb-4">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 text-red-600">
                     {value.icon}
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900">
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900">
                     {value.title}
                   </h3>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600">{value.description}</p>
+                <CardContent className="pt-0">
+                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+                    {value.description}
+                  </p>
                 </CardContent>
               </Card>
             ))}
@@ -235,16 +255,16 @@ const About = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-20">
+      <section className="py-12 sm:py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-8 sm:mb-12">
             Notre Équipe d'Experts
           </h2>
-          <div className="bg-gradient-to-r from-red-50 to-red-100 rounded-2xl p-12">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+          <div className="bg-gradient-to-r from-red-50 to-red-100 rounded-2xl p-6 sm:p-8 lg:p-12">
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">
               Nutritionnistes Certifiés & Experts Fitness
             </h3>
-            <p className="text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg text-gray-700 max-w-4xl mx-auto leading-relaxed">
               Notre équipe est composée de nutritionnistes certifiés,
               d'entraîneurs personnels expérimentés et d'experts en performance
               sportive. Ils travaillent ensemble pour développer et sélectionner

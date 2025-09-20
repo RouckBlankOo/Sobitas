@@ -50,26 +50,28 @@ const Register = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 pt-20">
-      <div className="max-w-2xl mx-auto px-4 py-12">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
           <Card className="shadow-xl border-0">
-            <CardHeader className="text-center pb-4">
-              <CardTitle className="text-2xl font-bold text-gray-800 mb-2">
+            <CardHeader className="text-center pb-4 px-4 sm:px-6">
+              <CardTitle className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">
                 Créer un compte
               </CardTitle>
-              <p className="text-gray-600">Rejoignez la communauté Sobitas</p>
+              <p className="text-sm sm:text-base text-gray-600">
+                Rejoignez la communauté Sobitas
+              </p>
             </CardHeader>
 
-            <CardContent className="px-6 pb-6">
+            <CardContent className="px-4 sm:px-6 pb-6">
               {/* User Type Toggle */}
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Personal Information */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Input
                       placeholder="Prénom *"
@@ -78,7 +80,7 @@ const Register = () => {
                       onChange={(e) =>
                         handleInputChange("firstName", e.target.value)
                       }
-                      className="h-11"
+                      className="h-11 sm:h-12 text-base"
                     />
                   </div>
                   <div>
@@ -89,7 +91,7 @@ const Register = () => {
                       onChange={(e) =>
                         handleInputChange("lastName", e.target.value)
                       }
-                      className="h-11"
+                      className="h-11 sm:h-12 text-base"
                     />
                   </div>
                 </div>
@@ -101,7 +103,7 @@ const Register = () => {
                     required
                     value={formData.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
-                    className="h-11"
+                    className="h-11 sm:h-12 text-base"
                   />
                 </div>
 
@@ -112,7 +114,7 @@ const Register = () => {
                     required
                     value={formData.phone}
                     onChange={(e) => handleInputChange("phone", e.target.value)}
-                    className="h-11"
+                    className="h-11 sm:h-12 text-base"
                   />
                 </div>
 
@@ -128,13 +130,13 @@ const Register = () => {
                     onChange={(e) =>
                       handleInputChange("password", e.target.value)
                     }
-                    className="h-11 pr-12"
+                    className="h-11 sm:h-12 pr-12 text-base"
                   />
                   <Button
                     type="button"
                     variant="ghost"
                     size="sm"
-                    className="absolute right-0 top-0 h-11 w-12 px-3"
+                    className="absolute right-0 top-0 h-11 sm:h-12 w-12 px-3"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
@@ -154,13 +156,13 @@ const Register = () => {
                     onChange={(e) =>
                       handleInputChange("confirmPassword", e.target.value)
                     }
-                    className="h-11 pr-12"
+                    className="h-11 sm:h-12 pr-12 text-base"
                   />
                   <Button
                     type="button"
                     variant="ghost"
                     size="sm"
-                    className="absolute right-0 top-0 h-11 w-12 px-3"
+                    className="absolute right-0 top-0 h-11 sm:h-12 w-12 px-3"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
                     {showConfirmPassword ? (
@@ -180,10 +182,13 @@ const Register = () => {
                     onChange={(e) =>
                       handleInputChange("agreeToTerms", e.target.checked)
                     }
-                    className="w-4 h-4 mt-1"
+                    className="w-4 h-4 sm:w-5 sm:h-5 mt-1 flex-shrink-0"
                     required
                   />
-                  <label htmlFor="terms" className="text-sm text-gray-600">
+                  <label
+                    htmlFor="terms"
+                    className="text-sm sm:text-base text-gray-600 leading-relaxed"
+                  >
                     J'accepte les{" "}
                     <Link to="/terms" className="text-blue-600 hover:underline">
                       conditions générales d'utilisation
@@ -200,7 +205,7 @@ const Register = () => {
 
                 <Button
                   type="submit"
-                  className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium"
+                  className="w-full h-11 sm:h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium text-base sm:text-lg"
                 >
                   Créer mon compte
                 </Button>
@@ -209,9 +214,14 @@ const Register = () => {
               <Separator className="my-6" />
 
               <div className="text-center">
-                <p className="text-gray-600 mb-3">Vous avez déjà un compte ?</p>
+                <p className="text-sm sm:text-base text-gray-600 mb-3">
+                  Vous avez déjà un compte ?
+                </p>
                 <Link to="/login">
-                  <Button variant="outline" className="w-full h-12">
+                  <Button
+                    variant="outline"
+                    className="w-full h-11 sm:h-12 text-base"
+                  >
                     Se connecter
                   </Button>
                 </Link>

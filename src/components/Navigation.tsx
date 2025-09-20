@@ -464,7 +464,7 @@ const Navigation = () => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="text-foreground hover:text-primary"
+                  className="text-foreground hover:text-primary p-2"
                   aria-label="Ouvrir le menu"
                 >
                   <Menu className="h-6 w-6" />
@@ -472,13 +472,22 @@ const Navigation = () => {
               </SheetTrigger>
               <SheetContent
                 side="right"
-                className="w-80 bg-card border-l border-border overflow-y-auto"
+                className="w-full sm:w-80 bg-card border-l border-border overflow-y-auto p-0"
               >
-                <div className="flex flex-col space-y-4 mt-8">
+                {/* Mobile Header */}
+                <div className="bg-primary/10 px-6 py-4 border-b border-border">
+                  <img
+                    src={SobitasLogo}
+                    alt="SOBITAS"
+                    className="h-16 w-auto"
+                  />
+                </div>
+
+                <div className="flex flex-col space-y-2 mt-6 px-4">
                   <a
                     href="/"
-                    className={`text-lg text-foreground hover:text-primary transition-smooth px-4 py-2 cursor-pointer ${
-                      location.pathname === "/" ? "text-primary" : ""
+                    className={`text-lg text-foreground hover:text-primary transition-smooth px-4 py-3 rounded-lg hover:bg-accent cursor-pointer ${
+                      location.pathname === "/" ? "text-primary bg-accent" : ""
                     }`}
                     onClick={(e) => handleSmoothNavigation(e, "/", "accueil")}
                   >
@@ -486,16 +495,16 @@ const Navigation = () => {
                   </a>
 
                   {/* Mobile Products Section */}
-                  <div className="px-4">
+                  <div className="border border-border rounded-lg">
                     <button
                       onClick={() => toggleCategory("main-products")}
-                      className={`flex items-center justify-between w-full text-lg font-semibold text-foreground mb-3 ${
-                        isProductsActive ? "text-primary" : ""
+                      className={`flex items-center justify-between w-full text-lg font-semibold text-foreground p-4 hover:bg-accent rounded-lg transition-smooth ${
+                        isProductsActive ? "text-primary bg-accent" : ""
                       }`}
                     >
-                      Produits
+                      <span className="flex items-center">🛍️ Produits</span>
                       <ChevronDown
-                        className={`h-4 w-4 transition-transform ${
+                        className={`h-5 w-5 transition-transform duration-200 ${
                           expandedCategories.has("main-products")
                             ? "rotate-180"
                             : ""
@@ -504,7 +513,7 @@ const Navigation = () => {
                     </button>
 
                     {expandedCategories.has("main-products") && (
-                      <div className="pl-4 space-y-2">
+                      <div className="pl-4 space-y-2 mt-2">
                         {productCategories.map((category) => (
                           <div key={category.name}>
                             <div className="flex items-center justify-between">
@@ -558,8 +567,10 @@ const Navigation = () => {
 
                   <Link
                     to="/blog"
-                    className={`text-lg text-foreground hover:text-primary transition-smooth px-4 py-2 ${
-                      location.pathname === "/blog" ? "text-primary" : ""
+                    className={`text-lg text-foreground hover:text-primary transition-smooth px-4 py-3 rounded-lg hover:bg-accent ${
+                      location.pathname === "/blog"
+                        ? "text-primary bg-accent"
+                        : ""
                     }`}
                     onClick={() => setIsOpen(false)}
                   >
@@ -567,26 +578,30 @@ const Navigation = () => {
                   </Link>
                   <a
                     href="/about"
-                    className={`text-lg text-foreground hover:text-primary transition-smooth px-4 py-2 cursor-pointer ${
-                      location.pathname === "/about" ? "text-primary" : ""
+                    className={`text-lg text-foreground hover:text-primary transition-smooth px-4 py-3 rounded-lg hover:bg-accent cursor-pointer ${
+                      location.pathname === "/about"
+                        ? "text-primary bg-accent"
+                        : ""
                     }`}
                     onClick={(e) =>
                       handleSmoothNavigation(e, "/about", "a-propos")
                     }
                   >
-                    À Propos
+                    ℹ️ À Propos
                   </a>
                   <a
                     href="#faq"
-                    className="text-lg text-foreground hover:text-primary transition-smooth px-4 py-2 cursor-pointer"
+                    className="text-lg text-foreground hover:text-primary transition-smooth px-4 py-3 rounded-lg hover:bg-accent cursor-pointer"
                     onClick={(e) => handleSmoothNavigation(e, "/", "faq")}
                   >
                     FAQ
                   </a>
                   <Link
                     to="/contact"
-                    className={`text-lg text-foreground hover:text-primary transition-smooth px-4 py-2 ${
-                      location.pathname === "/contact" ? "text-primary" : ""
+                    className={`text-lg text-foreground hover:text-primary transition-smooth px-4 py-3 rounded-lg hover:bg-accent ${
+                      location.pathname === "/contact"
+                        ? "text-primary bg-accent"
+                        : ""
                     }`}
                     onClick={() => setIsOpen(false)}
                   >
