@@ -13,6 +13,7 @@ import {
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import SobitasLogo from "@/assets/Sobitas2.png";
 import { smoothScrollTo } from "@/lib/utils";
+import { useCart } from "@/hooks/useCart";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +23,9 @@ const Navigation = () => {
   const productsRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
+  
+  // Cart functionality
+  const { openCart, getTotalItems } = useCart();
 
   // Authentication state
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -404,15 +408,18 @@ const Navigation = () => {
           {/* Desktop Navigation Actions */}
           <div className="hidden md:flex items-center space-x-3">
             <Button
-              asChild
               variant="ghost"
               size="sm"
-              className={cartButtonStyles}
+              className={`${cartButtonStyles} relative`}
               aria-label="Voir le panier"
+              onClick={openCart}
             >
-              <Link to="/cart">
-                <ShoppingCart className="h-5 w-5" />
-              </Link>
+              <ShoppingCart className="h-5 w-5" />
+              {getTotalItems() > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  {getTotalItems()}
+                </span>
+              )}
             </Button>
 
             {isLoggedIn ? (
@@ -467,7 +474,7 @@ const Navigation = () => {
                   className="text-foreground hover:text-primary p-2"
                   aria-label="Ouvrir le menu"
                 >
-                  <Menu className="h-6 w-6 text-red-500" />
+                  <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
               <SheetContent
@@ -502,7 +509,7 @@ const Navigation = () => {
                         isProductsActive ? "text-primary bg-accent" : ""
                       }`}
                     >
-                      <span className="flex items-center">Produits</span>
+                      <span className="flex items-center">🛍️ Produits</span>
                       <ChevronDown
                         className={`h-5 w-5 transition-transform duration-200 ${
                           expandedCategories.has("main-products")
@@ -587,7 +594,7 @@ const Navigation = () => {
                       handleSmoothNavigation(e, "/about", "a-propos")
                     }
                   >
-                    À Propos
+                    ℹ️ À Propos
                   </a>
                   <a
                     href="#faq"
@@ -612,16 +619,22 @@ const Navigation = () => {
                   <div className="px-4 py-4 border-t border-border mt-6 space-y-4">
                     {/* Cart */}
                     <Button
-                      asChild
                       variant="ghost"
                       size="sm"
-                      className={`${cartButtonStyles} w-full justify-start`}
+                      className={`${cartButtonStyles} w-full justify-start relative`}
                       aria-label="Voir le panier"
+                      onClick={() => {
+                        setIsOpen(false);
+                        openCart();
+                      }}
                     >
-                      <Link to="/cart" onClick={() => setIsOpen(false)}>
-                        <ShoppingCart className="h-5 w-5 mr-2" />
-                        Mon Panier
-                      </Link>
+                      <ShoppingCart className="h-5 w-5 mr-2" />
+                      Mon Panier
+                      {getTotalItems() > 0 && (
+                        <span className="ml-auto bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                          {getTotalItems()}
+                        </span>
+                      )}
                     </Button>
 
                     {isLoggedIn ? (

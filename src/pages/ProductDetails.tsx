@@ -5,6 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useState, useEffect } from "react";
+import { useCart } from "../hooks/useCart";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Heart,
   Star,
@@ -16,17 +24,34 @@ import {
   Info,
   CheckCircle,
   Zap,
+  Minus,
+  Plus,
+  Facebook,
+  Instagram,
+  Youtube,
 } from "lucide-react";
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
   const product = products.find((p) => p.id === Number(id));
+  const { addToCart } = useCart();
   const [activeTab, setActiveTab] = useState("overview");
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
   const [showStickyNav, setShowStickyNav] = useState(false);
   const [activeSection, setActiveSection] = useState("overview");
+  const [selectedFlavor, setSelectedFlavor] = useState("Double chocolat");
+
+  // Available flavors for products
+  const availableFlavors = [
+    "Double chocolat",
+    "Vanille",
+    "Fraise",
+    "Banane",
+    "Chocolat-noisette",
+    "Cookies & cream",
+  ];
 
   // Track scroll position and active section
   useEffect(() => {
@@ -168,8 +193,8 @@ const ProductDetails = () => {
                     type="button"
                     className={`px-2 sm:px-3 py-2 sm:py-3 text-xs sm:text-sm font-medium whitespace-nowrap rounded-lg transition-all duration-200 ${
                       activeSection === tab.id
-                        ? "bg-black text-white shadow-md"
-                        : "text-gray-600 hover:text-blue-600 hover:bg-red-50"
+                        ? "bg-gradient-to-r from-red-600 to-black text-white shadow-md"
+                        : "text-gray-600 hover:text-red-600 hover:bg-red-50"
                     }`}
                     onClick={(e) => handleStickyNavClick(e, tab.id)}
                     onTouchStart={(e) => e.stopPropagation()}
@@ -203,7 +228,7 @@ const ProductDetails = () => {
                 {[1, 2, 3, 4].map((_, index) => (
                   <div
                     key={index}
-                    className="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-md cursor-pointer border-2 border-transparent hover:border-blue-500"
+                    className="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-md cursor-pointer border-2 border-transparent hover:border-red-500"
                     onClick={() => setSelectedImage(index)}
                   >
                     <img
@@ -218,117 +243,145 @@ const ProductDetails = () => {
 
             {/* Product Info */}
             <div className="space-y-6">
-              {/* Product Name & Rating */}
+              {/* Product Name */}
               <div>
-                <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
+                <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
                   {product.title}
                 </h1>
-                <div className="flex items-center space-x-2 mb-3">
+
+                {/* Rating */}
+                <div className="flex items-center space-x-2 mb-6">
                   <div className="flex items-center">
                     {renderStars(averageRating)}
                   </div>
-                  <span className="text-sm text-gray-600">
-                    ({product.reviews?.length || 127} avis)
-                  </span>
                 </div>
-                <Badge variant="secondary" className="mb-4">
-                  {typeof product.category === "string"
-                    ? product.category
-                    : product.category?.title || "Non catégorisé"}
-                </Badge>
-              </div>
 
-              {/* Price */}
-              <div className="space-y-2">
-                <div className="flex items-baseline space-x-2">
-                  <span className="text-3xl font-bold text-gray-900">
-                    {product.price}DT
-                  </span>
+                {/* Price */}
+                <div className="flex items-baseline space-x-3 mb-6">
                   {product.oldPrice && (
-                    <span className="text-lg text-gray-500 line-through">
-                      {product.oldPrice}DT
+                    <span className="text-xl text-gray-500 line-through">
+                      {product.oldPrice} DT
                     </span>
                   )}
-                </div>
-                {product.oldPrice && (
-                  <Badge variant="destructive" className="text-xs">
-                    Économisez {(product.oldPrice - product.price).toFixed(2)}DT
-                  </Badge>
-                )}
-              </div>
-
-              {/* Key Benefits */}
-              <div className="bg-gradient-to-r from-red-50 to-red-50 rounded-lg p-4">
-                <div className="grid grid-cols-3 gap-4 text-center">
-                  <div>
-                    <Package className="w-8 h-8 mx-auto text-red-600 mb-2" />
-                    <div className="text-lg font-bold text-gray-900">90</div>
-                    <div className="text-xs text-gray-600">Comprimés</div>
-                    <div className="text-xs text-gray-500">
-                      dans l'emballage
-                    </div>
-                  </div>
-                  <div>
-                    <Award className="w-8 h-8 mx-auto text-red-600 mb-2" />
-                    <div className="text-lg font-bold text-gray-900">45</div>
-                    <div className="text-xs text-gray-600">Portions</div>
-                    <div className="text-xs text-gray-500">
-                      dans l'emballage
-                    </div>
-                  </div>
-                  <div>
-                    <Zap className="w-8 h-8 mx-auto text-red-600 mb-2" />
-                    <div className="text-lg font-bold text-gray-900">2</div>
-                    <div className="text-xs text-gray-600">Comprimés</div>
-                    <div className="text-xs text-gray-500">
-                      1 portion = 2 comprimés
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Quantity Selector */}
-              <div className="space-y-4">
-                <div className="flex items-center space-x-4">
-                  <span className="font-medium text-gray-900">Quantité:</span>
-                  <div className="flex items-center border border-gray-300 rounded-lg">
-                    <button
-                      onClick={() => handleQuantityChange(-1)}
-                      className="px-3 py-2 text-gray-600 hover:bg-gray-100"
-                    >
-                      -
-                    </button>
-                    <span className="px-4 py-2 font-medium">{quantity}</span>
-                    <button
-                      onClick={() => handleQuantityChange(1)}
-                      className="px-3 py-2 text-gray-600 hover:bg-gray-100"
-                    >
-                      +
-                    </button>
-                  </div>
+                  <span className="text-3xl font-bold text-red-600">
+                    {product.price} DT
+                  </span>
                 </div>
 
-                {/* Action Buttons */}
-                <div className="flex space-x-3">
+                {/* Product Description */}
+                <div className="mb-8">
+                  <p className="text-gray-700 leading-relaxed">
+                    {product.description ||
+                      `${product.title} Optimum Nutrition : Gainer ultra-calorique pour une prise de masse rapide et efficace, avec 1250 calories et 50 g de protéines par portion. Disponible sur Protein.tn.`}
+                  </p>
+                </div>
+
+                {/* Flavors Section */}
+                <div className="mb-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                    Arômes
+                  </h3>
+                  <Select
+                    value={selectedFlavor}
+                    onValueChange={setSelectedFlavor}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Sélectionnez un arôme" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {availableFlavors.map((flavor) => (
+                        <SelectItem key={flavor} value={flavor}>
+                          {flavor}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Quantity Section */}
+                <div className="mb-8">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                    Quantité
+                  </h3>
+                  <div className="flex items-center space-x-4">
+                    <div className="flex items-center border border-gray-300 rounded-lg">
+                      <button
+                        onClick={() => handleQuantityChange(-1)}
+                        className="px-4 py-3 text-gray-600 hover:bg-gray-100 border-r border-gray-300"
+                      >
+                        <Minus className="w-4 h-4" />
+                      </button>
+                      <span className="px-6 py-3 font-medium text-lg min-w-[60px] text-center">
+                        {quantity}
+                      </span>
+                      <button
+                        onClick={() => handleQuantityChange(1)}
+                        className="px-4 py-3 text-gray-600 hover:bg-gray-100 border-l border-gray-300"
+                      >
+                        <Plus className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Add to Cart Button */}
+                <div className="mb-8">
                   <Button
                     size="lg"
-                    className="flex-1 bg-red-600 hover:bg-red-700 text-white py-3"
+                    className="w-full bg-red-600 hover:bg-red-700 text-white py-4 text-lg font-semibold"
+                    onClick={() => {
+                      if (product) {
+                        for (let i = 0; i < quantity; i++) {
+                          addToCart({
+                            id: product.id,
+                            name: product.title,
+                            price: product.price,
+                            image: product.mainImage?.url || "/placeholder.svg",
+                          });
+                        }
+                      }
+                    }}
                   >
-                    <Package className="w-4 h-4 mr-2" />
-                    Ajouter au panier
+                    Ajouter Au Panier
                   </Button>
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    onClick={() => setIsFavorite(!isFavorite)}
-                    className={`px-4 ${
-                      isFavorite ? "text-red-500 border-red-500" : ""
-                    }`}
-                  >
-                    <Heart
-                      className={`w-4 h-4 ${isFavorite ? "fill-red-500" : ""}`}
-                    />
-                  </Button>
+                </div>
+
+                {/* Categories */}
+                <div className="mb-8">
+                  <div className="flex items-center space-x-2 text-sm text-gray-600">
+                    <span>Catégories:</span>
+                    <span className="text-gray-900 font-medium">
+                      Gainers Haute Energie
+                    </span>
+                    <span>,</span>
+                    <span className="text-gray-900 font-medium">
+                      PRISE DE MASSE
+                    </span>
+                  </div>
+                </div>
+
+                {/* Social Sharing */}
+                <div className="border-t pt-6">
+                  <div className="flex items-center space-x-3">
+                    <button className="w-10 h-10 rounded-full border border-red-300 flex items-center justify-center hover:bg-red-50 transition-colors">
+                      <Facebook className="w-4 h-4 text-red-600" />
+                    </button>
+                    <button className="w-10 h-10 rounded-full border border-red-300 flex items-center justify-center hover:bg-red-50 transition-colors">
+                      <Instagram className="w-4 h-4 text-red-600" />
+                    </button>
+                    <button className="w-10 h-10 rounded-full border border-red-300 flex items-center justify-center hover:bg-red-50 transition-colors">
+                      <svg
+                        className="w-4 h-4 text-red-600"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
+                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-.04-.1z" />
+                      </svg>
+                    </button>
+                    <button className="w-10 h-10 rounded-full border border-red-300 flex items-center justify-center hover:bg-red-50 transition-colors">
+                      <Youtube className="w-4 h-4 text-red-600" />
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -336,10 +389,10 @@ const ProductDetails = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="flex items-center space-x-2 text-sm text-gray-600">
                   <Truck className="w-4 h-4 text-green-600" />
-                  <span>Livraison gratuite dès 50DT</span>
+                  <span>Livraison gratuite dès 300DT</span>
                 </div>
                 <div className="flex items-center space-x-2 text-sm text-gray-600">
-                  <Shield className="w-4 h-4 text-blue-600" />
+                  <Shield className="w-4 h-4 text-red-600" />
                   <span>Qualité certifiée laboratoire</span>
                 </div>
               </div>
@@ -691,11 +744,11 @@ const ProductDetails = () => {
             <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">
               Mode d'emploi suggéré
             </h3>
-            <div className="bg-blue-50 border-l-4 border-blue-500 p-4 sm:p-6 rounded-r-lg">
-              <p className="text-blue-800 font-medium mb-2 text-sm sm:text-base">
+            <div className="bg-red-50 border-l-4 border-red-500 p-4 sm:p-6 rounded-r-lg">
+              <p className="text-red-800 font-medium mb-2 text-sm sm:text-base">
                 Dosage recommandé:
               </p>
-              <p className="text-blue-700 text-sm sm:text-base">
+              <p className="text-red-700 text-sm sm:text-base">
                 Prendre 2 comprimés par jour avec un repas et un verre d'eau.
               </p>
             </div>
@@ -730,8 +783,8 @@ const ProductDetails = () => {
 
             <div className="flex items-center justify-center space-x-4 sm:space-x-8 mb-4 sm:mb-6">
               <div className="text-center">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-red-600" />
                 </div>
                 <p className="text-xs sm:text-sm font-medium text-gray-900">
                   HAMILTON
@@ -756,13 +809,13 @@ const ProductDetails = () => {
             </div>
 
             <div className="space-y-3">
-              <div className="flex items-start space-x-3 text-blue-600">
+              <div className="flex items-start space-x-3 text-red-600">
                 <Info className="w-4 h-4 sm:w-5 sm:h-5 mt-0.5 flex-shrink-0" />
                 <span className="text-xs sm:text-sm underline cursor-pointer leading-relaxed">
                   {product.title} - Test microbiologique 07.08.2025
                 </span>
               </div>
-              <div className="flex items-start space-x-3 text-blue-600">
+              <div className="flex items-start space-x-3 text-red-600">
                 <Info className="w-4 h-4 sm:w-5 sm:h-5 mt-0.5 flex-shrink-0" />
                 <span className="text-xs sm:text-sm underline cursor-pointer leading-relaxed">
                   {product.title} - Test de teneur en métaux lourds 06.08.2025

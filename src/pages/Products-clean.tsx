@@ -140,7 +140,7 @@ const Products = () => {
               className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
                 selectedCategory === "all"
                   ? "bg-gradient-to-r from-red-600 to-black text-white shadow-lg"
-                  : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-200"
+                  : "bg-white text-gray-700 hover:bg-red-50 hover:text-red-600 border border-gray-200"
               }`}
             >
               Tous les produits
@@ -161,7 +161,7 @@ const Products = () => {
                     selectedCategory === category.value ||
                     category.sub?.some((sub) => sub.value === selectedCategory)
                       ? "bg-gradient-to-r from-red-600 to-black text-white shadow-lg"
-                      : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-200"
+                      : "bg-white text-gray-700 hover:bg-red-50 hover:text-red-600 border border-gray-200"
                   }`}
                 >
                   {category.name}
@@ -181,8 +181,8 @@ const Products = () => {
                         }}
                         className={`block w-full text-left px-4 py-2 rounded-md transition-colors ${
                           selectedCategory === subCategory.value
-                            ? "bg-red-50 text-red-700"
-                            : "text-gray-700 hover:bg-gray-50"
+                            ? "bg-red-50 text-red-900"
+                            : "text-gray-700 hover:bg-red-50 hover:text-red-600"
                         }`}
                       >
                         {subCategory.name}
@@ -203,7 +203,7 @@ const Products = () => {
                 placeholder="Rechercher des produits..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
               />
             </div>
             <select
@@ -217,7 +217,7 @@ const Products = () => {
                     | "rating"
                 )
               }
-              className="px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+              className="px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white"
             >
               <option value="relevance">Pertinence</option>
               <option value="price-asc">Prix croissant</option>
@@ -268,7 +268,7 @@ const Products = () => {
                 <CardContent className="p-6 flex flex-col justify-between flex-grow">
                   <div className="mb-4">
                     <h3
-                      className="font-semibold text-lg mb-2 line-clamp-2 text-gray-900 cursor-pointer hover:text-blue-600 transition-colors"
+                      className="font-semibold text-lg mb-2 line-clamp-2 text-gray-900 cursor-pointer hover:text-red-600 transition-colors"
                       onClick={() => navigate(`/product/${product.id}`)}
                     >
                       {product.title}
@@ -305,7 +305,7 @@ const Products = () => {
                     className={`w-full ${
                       product.quantity === 0
                         ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-gradient-to-r from-red-600 to-black hover:from-red-700 hover:to-gray-900"
+                        : "bg-gradient-to-r from-red-600 to-black hover:from-red-700 hover:to-black"
                     } text-white`}
                     disabled={product.quantity === 0}
                     onClick={() => {

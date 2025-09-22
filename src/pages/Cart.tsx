@@ -8,6 +8,13 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Minus,
   Plus,
   Trash2,
@@ -18,26 +25,23 @@ import {
   Package,
   CreditCard,
 } from "lucide-react";
+import {
+  getGovernoratesList,
+  getDelegationsList,
+  getLocalitiesList,
+} from "@/data/tunisianLocations";
 import { Link } from "react-router-dom";
+import { useCart } from "@/hooks/useCart";
 
 const Cart = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
+  // Use cart context instead of local state
+  const { cartItems, updateQuantity, removeFromCart, getTotalPrice, clearCart, addToCart } = useCart();
+
   // Step state - 1 for cart, 2 for checkout
   const [currentStep, setCurrentStep] = useState(1);
-
-  // Cart state
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: " SERIOUS MASS – 5,45 KG",
-      price: 380,
-      quantity: 1,
-      image: "/api/placeholder/80/80",
-      inStock: true,
-    },
-  ]);
 
   const [promoCode, setPromoCode] = useState("");
   const [promoApplied, setPromoApplied] = useState(false);
@@ -63,46 +67,31 @@ const Cart = () => {
   // Recommended products
   const recommendedProducts = [
     {
-      id: 1,
+      id: 101,
       name: "100% WHEY GOLD STANDARD – 2.27KG",
-      price: "380 DT",
+      price: 380,
+      priceDisplay: "380 DT",
       rating: 5,
       image: "/api/placeholder/200/200",
       variants: ["1kg", "3kg"],
     },
     {
-      id: 2,
+      id: 102,
       name: "REAL ISOLATE – 1,8 KG",
-      price: "289 DT",
+      price: 289,
+      priceDisplay: "289 DT",
       rating: 5,
       image: "/api/placeholder/200/200",
     },
   ];
 
-  // Calculate totals
-  const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-  const shipping = 0; // Free shipping example
+  // Calculate totals using cart context
+  const subtotal = getTotalPrice();
+  const shipping: number = 7; // Shipping cost
   const total = subtotal + shipping;
 
-  // Cart functions
-  const updateQuantity = (id: number, newQuantity: number) => {
-    if (newQuantity <= 0) {
-      removeItem(id);
-      return;
-    }
-    setCartItems((items) =>
-      items.map((item) =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
-
-  const removeItem = (id: number) => {
-    setCartItems((items) => items.filter((item) => item.id !== id));
-  };
+  // Cart functions - use context functions directly
+  // updateQuantity and removeFromCart are now from useCart hook
 
   const applyPromoCode = () => {
     if (promoCode.trim()) {
@@ -278,9 +267,7 @@ const Cart = () => {
                                   {item.name}
                                 </h3>
                                 <p className="text-xs sm:text-sm text-muted-foreground">
-                                  {item.inStock
-                                    ? "En stock"
-                                    : "Rupture de stock"}
+                                  En stock
                                 </p>
                               </div>
                             </div>
@@ -326,7 +313,7 @@ const Cart = () => {
                                 <Button
                                   variant="ghost"
                                   size="sm"
-                                  onClick={() => removeItem(item.id)}
+                                  onClick={() => removeFromCart(item.id)}
                                   className="text-red-500 hover:text-red-700"
                                 >
                                   <Trash2 className="h-4 w-4" />
@@ -471,7 +458,7 @@ const Cart = () => {
                         </div>
 
                         <p className="font-bold text-primary mb-4">
-                          {product.price}
+                          {product.priceDisplay}
                         </p>
 
                         {product.variants && (
@@ -484,7 +471,18 @@ const Cart = () => {
                           </div>
                         )}
 
-                        <Button className="w-full" variant="outline">
+                        <Button 
+                          className="w-full" 
+                          variant="outline"
+                          onClick={() => {
+                            addToCart({
+                              id: product.id,
+                              name: product.name,
+                              price: product.price,
+                              image: product.image,
+                            });
+                          }}
+                        >
                           Ajouter au panier
                         </Button>
                       </CardContent>
@@ -496,228 +494,374 @@ const Cart = () => {
           </>
         ) : currentStep === 2 ? (
           // Checkout Step
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-8"
+              className="grid grid-cols-1 lg:grid-cols-3 gap-8"
             >
               {/* Left Column - Billing Information */}
-              <Card className="p-6">
-                <h3 className="text-xl font-semibold mb-6">
-                  Informations de facturation
-                </h3>
-                <div className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-2">
-                        Prénom *
-                      </label>
-                      <Input
-                        value={checkoutForm.firstName}
-                        onChange={(e) =>
-                          setCheckoutForm({
-                            ...checkoutForm,
-                            firstName: e.target.value,
-                          })
-                        }
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2">
-                        Nom *
-                      </label>
-                      <Input
-                        value={checkoutForm.lastName}
-                        onChange={(e) =>
-                          setCheckoutForm({
-                            ...checkoutForm,
-                            lastName: e.target.value,
-                          })
-                        }
-                        required
-                      />
-                    </div>
+              <div className="lg:col-span-2">
+                <Card className="p-8 shadow-lg border-0 bg-white">
+                  <div className="border-b border-gray-200 pb-6 mb-8">
+                    <h3 className="text-2xl font-bold text-gray-900">
+                      Informations de facturation
+                    </h3>
+                    <p className="text-gray-600 mt-2">
+                      Veuillez remplir vos informations de livraison
+                    </p>
                   </div>
+                  <div className="space-y-8">
+                    {/* Personal Information Section */}
+                    <div className="space-y-6">
+                      <h4 className="text-lg font-semibold text-gray-800 flex items-center">
+                        <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-3">
+                          <span className="text-red-600 font-bold text-sm">
+                            1
+                          </span>
+                        </div>
+                        Informations personnelles
+                      </h4>
 
-                  <div>
-                    <label className="block text-sm font-medium mb-2">
-                      Adresse e-mail *
-                    </label>
-                    <Input
-                      type="email"
-                      value={checkoutForm.email}
-                      onChange={(e) =>
-                        setCheckoutForm({
-                          ...checkoutForm,
-                          email: e.target.value,
-                        })
-                      }
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-2">
-                      Téléphone *
-                    </label>
-                    <Input
-                      type="tel"
-                      value={checkoutForm.phone1}
-                      onChange={(e) =>
-                        setCheckoutForm({
-                          ...checkoutForm,
-                          phone1: e.target.value,
-                        })
-                      }
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-2">
-                      Pays *
-                    </label>
-                    <Input
-                      value={checkoutForm.country}
-                      onChange={(e) =>
-                        setCheckoutForm({
-                          ...checkoutForm,
-                          country: e.target.value,
-                        })
-                      }
-                      required
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-2">
-                        Gouvernorat *
-                      </label>
-                      <Input
-                        value={checkoutForm.governorate}
-                        onChange={(e) =>
-                          setCheckoutForm({
-                            ...checkoutForm,
-                            governorate: e.target.value,
-                          })
-                        }
-                        required
-                      />
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                          <label className="block text-sm font-semibold text-gray-700">
+                            Prénom <span className="text-red-500">*</span>
+                          </label>
+                          <Input
+                            value={checkoutForm.firstName}
+                            onChange={(e) =>
+                              setCheckoutForm({
+                                ...checkoutForm,
+                                firstName: e.target.value,
+                              })
+                            }
+                            className="h-12 border-gray-300 focus:border-red-500 focus:ring-red-500"
+                            placeholder="Votre prénom"
+                            required
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="block text-sm font-semibold text-gray-700">
+                            Nom <span className="text-red-500">*</span>
+                          </label>
+                          <Input
+                            value={checkoutForm.lastName}
+                            onChange={(e) =>
+                              setCheckoutForm({
+                                ...checkoutForm,
+                                lastName: e.target.value,
+                              })
+                            }
+                            className="h-12 border-gray-300 focus:border-red-500 focus:ring-red-500"
+                            placeholder="Votre nom"
+                            required
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2">
-                        Délégation *
-                      </label>
-                      <Input
-                        value={checkoutForm.delegation}
-                        onChange={(e) =>
-                          setCheckoutForm({
-                            ...checkoutForm,
-                            delegation: e.target.value,
-                          })
-                        }
-                        required
-                      />
-                    </div>
-                  </div>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-2">
-                        Localité *
-                      </label>
-                      <Input
-                        value={checkoutForm.locality}
-                        onChange={(e) =>
-                          setCheckoutForm({
-                            ...checkoutForm,
-                            locality: e.target.value,
-                          })
-                        }
-                        required
-                      />
+                    {/* Contact Information Section */}
+                    <div className="space-y-6">
+                      <h4 className="text-lg font-semibold text-gray-800 flex items-center">
+                        <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-3">
+                          <span className="text-red-600 font-bold text-sm">
+                            2
+                          </span>
+                        </div>
+                        Contact
+                      </h4>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                          <label className="block text-sm font-semibold text-gray-700">
+                            Adresse e-mail{" "}
+                            <span className="text-red-500">*</span>
+                          </label>
+                          <Input
+                            type="email"
+                            value={checkoutForm.email}
+                            onChange={(e) =>
+                              setCheckoutForm({
+                                ...checkoutForm,
+                                email: e.target.value,
+                              })
+                            }
+                            className="h-12 border-gray-300 focus:border-red-500 focus:ring-red-500"
+                            placeholder="votre@email.com"
+                            required
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="block text-sm font-semibold text-gray-700">
+                            Téléphone <span className="text-red-500">*</span>
+                          </label>
+                          <Input
+                            type="tel"
+                            value={checkoutForm.phone1}
+                            onChange={(e) =>
+                              setCheckoutForm({
+                                ...checkoutForm,
+                                phone1: e.target.value,
+                              })
+                            }
+                            className="h-12 border-gray-300 focus:border-red-500 focus:ring-red-500"
+                            placeholder="+216 XX XXX XXX"
+                            required
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2">
-                        Code postal *
-                      </label>
-                      <Input
-                        value={checkoutForm.postalCode}
-                        onChange={(e) =>
-                          setCheckoutForm({
-                            ...checkoutForm,
-                            postalCode: e.target.value,
-                          })
-                        }
-                        required
-                      />
+
+                    {/* Address Information Section */}
+                    <div className="space-y-6">
+                      <h4 className="text-lg font-semibold text-gray-800 flex items-center">
+                        <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-3">
+                          <span className="text-red-600 font-bold text-sm">
+                            3
+                          </span>
+                        </div>
+                        Adresse de livraison
+                      </h4>
+
+                      <div className="space-y-6">
+                        <div className="space-y-2">
+                          <label className="block text-sm font-semibold text-gray-700">
+                            Pays/région <span className="text-red-500">*</span>
+                          </label>
+                          <div className="h-12 bg-gray-50 border border-gray-300 rounded-md px-4 flex items-center">
+                            <span className="text-gray-700 font-medium">
+                              🇹🇳 Tunisie
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div className="space-y-2">
+                            <label className="block text-sm font-semibold text-gray-700">
+                              Gouvernorat{" "}
+                              <span className="text-red-500">*</span>
+                            </label>
+                            <Select
+                              value={checkoutForm.governorate}
+                              onValueChange={(value) => {
+                                setCheckoutForm({
+                                  ...checkoutForm,
+                                  governorate: value,
+                                  delegation: "",
+                                  locality: "",
+                                });
+                              }}
+                            >
+                              <SelectTrigger className="h-12 border-gray-300 focus:border-red-500 focus:ring-red-500">
+                                <SelectValue placeholder="Sélectionnez le gouvernorat" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {getGovernoratesList().map((gov) => (
+                                  <SelectItem key={gov} value={gov}>
+                                    {gov}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </div>
+
+                          <div className="space-y-2">
+                            <label className="block text-sm font-semibold text-gray-700">
+                              Délégation <span className="text-red-500">*</span>
+                            </label>
+                            <Select
+                              value={checkoutForm.delegation}
+                              onValueChange={(value) => {
+                                setCheckoutForm({
+                                  ...checkoutForm,
+                                  delegation: value,
+                                  locality: "",
+                                });
+                              }}
+                              disabled={!checkoutForm.governorate}
+                            >
+                              <SelectTrigger className="h-12 border-gray-300 focus:border-red-500 focus:ring-red-500 disabled:bg-gray-50">
+                                <SelectValue placeholder="Sélectionnez la délégation" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {checkoutForm.governorate &&
+                                  getDelegationsList(
+                                    checkoutForm.governorate
+                                  ).map((del) => (
+                                    <SelectItem key={del} value={del}>
+                                      {del}
+                                    </SelectItem>
+                                  ))}
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div className="space-y-2">
+                            <label className="block text-sm font-semibold text-gray-700">
+                              Localité <span className="text-red-500">*</span>
+                            </label>
+                            <Select
+                              value={checkoutForm.locality}
+                              onValueChange={(value) => {
+                                setCheckoutForm({
+                                  ...checkoutForm,
+                                  locality: value,
+                                });
+                              }}
+                              disabled={!checkoutForm.delegation}
+                            >
+                              <SelectTrigger className="h-12 border-gray-300 focus:border-red-500 focus:ring-red-500 disabled:bg-gray-50">
+                                <SelectValue placeholder="Sélectionnez la localité" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {checkoutForm.governorate &&
+                                  checkoutForm.delegation &&
+                                  getLocalitiesList(
+                                    checkoutForm.governorate,
+                                    checkoutForm.delegation
+                                  ).map((loc) => (
+                                    <SelectItem key={loc} value={loc}>
+                                      {loc}
+                                    </SelectItem>
+                                  ))}
+                              </SelectContent>
+                            </Select>
+                          </div>
+
+                          <div className="space-y-2">
+                            <label className="block text-sm font-semibold text-gray-700">
+                              Code postal{" "}
+                              <span className="text-red-500">*</span>
+                            </label>
+                            <Input
+                              value={checkoutForm.postalCode}
+                              onChange={(e) =>
+                                setCheckoutForm({
+                                  ...checkoutForm,
+                                  postalCode: e.target.value,
+                                })
+                              }
+                              className="h-12 border-gray-300 focus:border-red-500 focus:ring-red-500"
+                              placeholder="Ex: 1000"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Card>
+                </Card>
+              </div>
 
               {/* Right Column - Order Summary */}
               <div className="space-y-6">
                 {/* Order Summary */}
-                <Card className="p-6">
-                  <h3 className="text-xl font-semibold mb-4">Votre commande</h3>
-                  <div className="space-y-3">
+                <Card className="p-6 shadow-lg border-0 bg-white sticky top-4">
+                  <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                    <Package className="h-5 w-5 mr-2 text-red-600" />
+                    Votre commande
+                  </h3>
+                  <div className="space-y-4">
                     {cartItems.map((item) => (
                       <div
                         key={item.id}
-                        className="flex justify-between items-center"
+                        className="flex justify-between items-center py-3 border-b border-gray-100 last:border-b-0"
                       >
-                        <span className="text-sm">
-                          {item.name} × {item.quantity}
-                        </span>
-                        <span className="font-medium">
+                        <div className="flex items-center space-x-3">
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            className="w-12 h-12 object-cover rounded-md"
+                          />
+                          <div>
+                            <span className="font-medium text-gray-900 text-sm block">
+                              {item.name}
+                            </span>
+                            <span className="text-gray-500 text-xs">
+                              Quantité: {item.quantity}
+                            </span>
+                          </div>
+                        </div>
+                        <span className="font-bold text-red-600">
                           {(item.price * item.quantity).toFixed(2)} DT
                         </span>
                       </div>
                     ))}
-                    <Separator />
-                    <div className="flex justify-between items-center font-semibold text-lg">
-                      <span>Total</span>
-                      <span>{total.toFixed(2)} DT</span>
+
+                    <div className="pt-4 border-t border-gray-200">
+                      <div className="flex justify-between items-center py-2">
+                        <span className="text-gray-600">Sous-total</span>
+                        <span className="font-medium">
+                          {subtotal.toFixed(2)} DT
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center py-2">
+                        <span className="text-gray-600">Livraison</span>
+                        <span className="font-medium">
+                          {shipping.toFixed(2)} DT
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center py-3 text-xl font-bold border-t border-gray-200 mt-3 pt-3">
+                        <span>Total</span>
+                        <span className="text-red-600">
+                          {total.toFixed(2)} DT
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </Card>
 
                 {/* Terms and Conditions */}
-                <Card className="p-6">
-                  <label className="flex items-start space-x-3 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={agreedToTerms}
-                      onChange={(e) => setAgreedToTerms(e.target.checked)}
-                      className="w-4 h-4 mt-1"
-                    />
-                    <span className="text-sm">
-                      J'ai lu et j'accepte les{" "}
-                      <a href="#" className="text-blue-600 hover:underline">
-                        conditions générales de vente
-                      </a>
-                    </span>
-                  </label>
+                <Card className="p-6 shadow-lg border-0 bg-white">
+                  <div className="space-y-4">
+                    <h4 className="font-semibold text-gray-900">
+                      Conditions générales
+                    </h4>
+                    <label className="flex items-start space-x-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={agreedToTerms}
+                        onChange={(e) => setAgreedToTerms(e.target.checked)}
+                        className="mt-1 h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
+                      />
+                      <span className="text-sm text-gray-700 leading-relaxed">
+                        J'accepte les{" "}
+                        <a
+                          href="#"
+                          className="text-red-600 hover:text-red-700 underline font-medium"
+                        >
+                          termes et conditions
+                        </a>{" "}
+                        et la{" "}
+                        <a
+                          href="#"
+                          className="text-red-600 hover:text-red-700 underline font-medium"
+                        >
+                          politique de confidentialité
+                        </a>
+                      </span>
+                    </label>
+                  </div>
                 </Card>
 
                 {/* Order Button */}
                 <Button
-                  className="w-full py-3 text-lg font-semibold"
+                  className="w-full py-4 text-lg font-bold bg-gradient-to-r from-red-600 to-black hover:from-red-700 hover:to-gray-900 transition-all duration-300 shadow-lg"
                   onClick={() => setCurrentStep(3)}
                   disabled={!agreedToTerms}
                 >
+                  <CreditCard className="h-5 w-5 mr-2" />
                   Commander - {total.toFixed(2)} DT
                 </Button>
               </div>
             </motion.div>
           </div>
         ) : (
-          // Order Confirmation Step - Step 3
+          // Confirmation Step
           <div className="max-w-4xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
@@ -812,9 +956,7 @@ const Cart = () => {
                             {checkoutForm.delegation},{" "}
                             {checkoutForm.governorate}
                           </p>
-                          <p>
-                            {checkoutForm.country} {checkoutForm.postalCode}
-                          </p>
+                          <p>Tunisie {checkoutForm.postalCode}</p>
                         </div>
                       </div>
                     </div>
@@ -892,7 +1034,7 @@ const Cart = () => {
                     variant="outline"
                     onClick={() => {
                       setCurrentStep(1);
-                      setCartItems([]);
+                      clearCart();
                       setCheckoutForm({
                         firstName: "",
                         lastName: "",
