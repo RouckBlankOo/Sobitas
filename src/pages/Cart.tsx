@@ -38,7 +38,14 @@ const Cart = () => {
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   // Use cart context instead of local state
-  const { cartItems, updateQuantity, removeFromCart, getTotalPrice, clearCart, addToCart } = useCart();
+  const {
+    cartItems,
+    updateQuantity,
+    removeFromCart,
+    getTotalPrice,
+    clearCart,
+    addToCart,
+  } = useCart();
 
   // Step state - 1 for cart, 2 for checkout
   const [currentStep, setCurrentStep] = useState(1);
@@ -471,8 +478,8 @@ const Cart = () => {
                           </div>
                         )}
 
-                        <Button 
-                          className="w-full" 
+                        <Button
+                          className="w-full"
                           variant="outline"
                           onClick={() => {
                             addToCart({

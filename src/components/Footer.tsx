@@ -194,16 +194,20 @@ const Footer = () => {
             </div>
             <div className="flex items-center space-x-4">
               <a
-                href="https://www.facebook.com/sobitass"
+                href="https://www.facebook.com/groups/1650277201915391/"
                 className="text-gray-300 hover:text-red-400 transition-smooth"
                 aria-label="Facebook"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Facebook className="h-5 w-5" />
               </a>
               <a
-                href="https://www.instagram.com/sobitas_/"
+                href="https://www.instagram.com/protein.tunisie/"
                 className="text-gray-300 hover:text-red-400 transition-smooth"
                 aria-label="Instagram"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Instagram className="h-5 w-5" />
               </a>

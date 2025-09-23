@@ -23,7 +23,7 @@ const Navigation = () => {
   const productsRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   // Cart functionality
   const { openCart, getTotalItems } = useCart();
 

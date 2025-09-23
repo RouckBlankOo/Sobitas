@@ -9,6 +9,7 @@ import { useCart } from "../hooks/useCart";
 import { useProducts } from "../hooks/useProducts";
 import type { Product } from "../types/product";
 import { useNavigate } from "react-router-dom";
+import { CustomSelect, SelectOption } from "@/components/ui/custom-select";
 
 const Products = () => {
   // All hooks at the top level
@@ -47,6 +48,13 @@ const Products = () => {
         { name: "Caséine", value: "casein" },
       ],
     },
+  ];
+
+  const sortOptions: SelectOption[] = [
+    { value: "relevance", label: "Pertinence" },
+    { value: "price-asc", label: "Prix croissant" },
+    { value: "price-desc", label: "Prix décroissant" },
+    { value: "rating", label: "Mieux notés" },
   ];
 
   const filteredProducts = (() => {
@@ -206,24 +214,12 @@ const Products = () => {
                 className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
               />
             </div>
-            <select
+            <CustomSelect
+              options={sortOptions}
               value={sortOption}
-              onChange={(e) =>
-                setSortOption(
-                  e.target.value as
-                    | "relevance"
-                    | "price-asc"
-                    | "price-desc"
-                    | "rating"
-                )
-              }
-              className="px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white"
-            >
-              <option value="relevance">Pertinence</option>
-              <option value="price-asc">Prix croissant</option>
-              <option value="price-desc">Prix décroissant</option>
-              <option value="rating">Mieux notés</option>
-            </select>
+              onChange={(value) => setSortOption(value as "relevance" | "price-asc" | "price-desc" | "rating")}
+              className="w-full sm:w-auto min-w-[200px]"
+            />
           </div>
         </div>
 

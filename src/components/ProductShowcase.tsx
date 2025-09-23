@@ -178,7 +178,7 @@ const ProductShowcase = () => {
                     <Badge
                       key={index}
                       variant="secondary"
-                      className="bg-secondary text-primary border-primary/20"
+                      className="bg-red-50 text-red-600 border-red-200 hover:bg-red-100"
                     >
                       {feature}
                     </Badge>
@@ -188,10 +188,10 @@ const ProductShowcase = () => {
                 {/* Price */}
                 <div className="flex items-center gap-2 mb-4">
                   <span className="text-2xl font-bold text-primary">
-                    {product.price}
+                    {product.price} {product.currency}
                   </span>
                   <span className="text-lg text-muted-foreground line-through">
-                    {product.oldPrice}
+                    {product.oldPrice} {product.currency}
                   </span>
                 </div>
 

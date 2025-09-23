@@ -6,6 +6,7 @@ import { useState, useMemo, useRef } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { CustomSelect, SelectOption } from "@/components/ui/custom-select";
 
 // Mock blog data - you can replace this with actual data fetching
 const blogPosts = [
@@ -140,6 +141,13 @@ const Blog = () => {
     { name: "Healthy Eating", value: "healthy-eating" },
   ];
 
+  const sortOptions: SelectOption[] = [
+    { value: "recent", label: "Plus récents" },
+    { value: "popular", label: "Plus populaires" },
+    { value: "alphabetical", label: "Alphabétique" },
+    { value: "rating", label: "Mieux notés" },
+  ];
+
   const filteredPosts = (() => {
     if (selectedCategory === "all") return blogPosts;
     return blogPosts.filter((post) => post.category === selectedCategory);
@@ -165,6 +173,7 @@ const Blog = () => {
           new Date(b.publishedDate).getTime() -
           new Date(a.publishedDate).getTime()
       );
+    else if (sortOption === "rating") list.sort((a, b) => b.views - a.views); // Using views as rating for now
     return list;
   }, [filteredPosts, searchQuery, sortOption]);
 
@@ -248,27 +257,12 @@ const Blog = () => {
                   className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 />
               </div>
-              <select
+              <CustomSelect
+                options={sortOptions}
                 value={sortOption}
-                onChange={(e) =>
-                  setSortOption(
-                    e.target.value as "recent" | "popular" | "alphabetical" | "rating"
-                  )
-                }
-                className="px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white appearance-none"
-                style={{
-                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23dc2626' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
-                  backgroundPosition: 'right 0.5rem center',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundSize: '1.5em 1.5em',
-                  paddingRight: '2.5rem'
-                }}
-              >
-                <option value="recent">Pertinence</option>
-                <option value="popular">Prix croissant</option>
-                <option value="alphabetical">Prix décroissant</option>
-                <option value="rating">Mieux notés</option>
-              </select>
+                onChange={(value) => setSortOption(value as "recent" | "popular" | "alphabetical" | "rating")}
+                className="w-full sm:w-auto min-w-[200px]"
+              />
             </div>
 
             {/* Blog Posts Grid */}

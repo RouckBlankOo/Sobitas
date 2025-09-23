@@ -363,12 +363,22 @@ const ProductDetails = () => {
                 {/* Social Sharing */}
                 <div className="border-t pt-6">
                   <div className="flex items-center space-x-3">
-                    <button className="w-10 h-10 rounded-full border border-red-300 flex items-center justify-center hover:bg-red-50 transition-colors">
+                    <a 
+                      href="https://www.facebook.com/groups/1650277201915391/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-full border border-red-300 flex items-center justify-center hover:bg-red-50 transition-colors"
+                    >
                       <Facebook className="w-4 h-4 text-red-600" />
-                    </button>
-                    <button className="w-10 h-10 rounded-full border border-red-300 flex items-center justify-center hover:bg-red-50 transition-colors">
+                    </a>
+                    <a 
+                      href="https://www.instagram.com/protein.tunisie/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-full border border-red-300 flex items-center justify-center hover:bg-red-50 transition-colors"
+                    >
                       <Instagram className="w-4 h-4 text-red-600" />
-                    </button>
+                    </a>
                     <button className="w-10 h-10 rounded-full border border-red-300 flex items-center justify-center hover:bg-red-50 transition-colors">
                       <svg
                         className="w-4 h-4 text-red-600"

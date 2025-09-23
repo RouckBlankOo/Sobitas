@@ -89,6 +89,92 @@
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-primary/70;
   }
+
+  /* Override browser default blue colors */
+  select:focus,
+  select:focus-visible {
+    outline: 2px solid rgb(220, 38, 38) !important;
+    outline-offset: 2px;
+  }
+
+  /* Override default option hover/selection colors - More aggressive approach */
+  select option {
+    background-color: white !important;
+    background: white !important;
+    color: #374151 !important;
+    padding: 8px 12px !important;
+  }
+
+  select option:hover,
+  select option:checked,
+  select option:focus,
+  select option:active,
+  select option[selected] {
+    background-color: rgb(220, 38, 38) !important;
+    background: rgb(220, 38, 38) !important;
+    color: white !important;
+    box-shadow: none !important;
+  }
+
+  /* Force override for all states */
+  select option:hover {
+    background: rgb(220, 38, 38) !important;
+    background-color: rgb(220, 38, 38) !important;
+    background-image: none !important;
+    color: white !important;
+  }
+
+  /* Remove any inherited background colors */
+  select option {
+    background: none !important;
+    background-color: white !important;
+  }
+
+  select option:not(:checked) {
+    background-color: white !important;
+    color: #374151 !important;
+  }
+
+  /* Webkit specific overrides */
+  select::-webkit-option {
+    background-color: white !important;
+    color: #374151 !important;
+  }
+
+  select::-webkit-option:hover {
+    background-color: rgb(220, 38, 38) !important;
+    color: white !important;
+  }
+
+  /* For WebKit browsers (Chrome, Safari, Edge) */
+  select option:hover {
+    background: linear-gradient(rgb(220, 38, 38), rgb(220, 38, 38)) !important;
+  }
+
+  /* For Firefox */
+  @-moz-document url-prefix() {
+    select option:hover,
+    select option:focus {
+      background-color: rgb(220, 38, 38) !important;
+      color: white !important;
+    }
+  }
+
+  /* Additional aggressive overrides */
+  select {
+    color-scheme: light !important;
+  }
+
+  /* Selection color override */
+  ::selection {
+    background-color: rgb(220, 38, 38);
+    color: white;
+  }
+
+  ::-moz-selection {
+    background-color: rgb(220, 38, 38);
+    color: white;
+  }
 }
 
 /* Custom Utility Classes */
