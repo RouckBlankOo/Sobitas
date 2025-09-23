@@ -31,7 +31,10 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
+      if (
+        selectRef.current &&
+        !selectRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -65,7 +68,8 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
           setIsOpen(true);
         } else {
           const currentIndex = options.findIndex((opt) => opt.value === value);
-          const nextIndex = currentIndex < options.length - 1 ? currentIndex + 1 : 0;
+          const nextIndex =
+            currentIndex < options.length - 1 ? currentIndex + 1 : 0;
           onChange(options[nextIndex].value);
         }
         break;
@@ -75,7 +79,8 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
           setIsOpen(true);
         } else {
           const currentIndex = options.findIndex((opt) => opt.value === value);
-          const prevIndex = currentIndex > 0 ? currentIndex - 1 : options.length - 1;
+          const prevIndex =
+            currentIndex > 0 ? currentIndex - 1 : options.length - 1;
           onChange(options[prevIndex].value);
         }
         break;
@@ -83,13 +88,7 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
   };
 
   return (
-    <div
-      ref={selectRef}
-      className={cn(
-        "relative",
-        className
-      )}
-    >
+    <div ref={selectRef} className={cn("relative", className)}>
       <div
         role="combobox"
         aria-expanded={isOpen}
@@ -105,10 +104,12 @@ export const CustomSelect: React.FC<CustomSelectProps> = ({
         onClick={() => !disabled && setIsOpen(!isOpen)}
         onKeyDown={handleKeyDown}
       >
-        <span className={cn(
-          "text-sm font-medium",
-          selectedOption ? "text-gray-900" : "text-gray-500"
-        )}>
+        <span
+          className={cn(
+            "text-sm font-medium",
+            selectedOption ? "text-gray-900" : "text-gray-500"
+          )}
+        >
           {selectedOption ? selectedOption.label : placeholder}
         </span>
         <ChevronDown

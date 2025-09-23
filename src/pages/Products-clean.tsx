@@ -217,7 +217,11 @@ const Products = () => {
             <CustomSelect
               options={sortOptions}
               value={sortOption}
-              onChange={(value) => setSortOption(value as "relevance" | "price-asc" | "price-desc" | "rating")}
+              onChange={(value) =>
+                setSortOption(
+                  value as "relevance" | "price-asc" | "price-desc" | "rating"
+                )
+              }
               className="w-full sm:w-auto min-w-[200px]"
             />
           </div>

@@ -363,7 +363,7 @@ const ProductDetails = () => {
                 {/* Social Sharing */}
                 <div className="border-t pt-6">
                   <div className="flex items-center space-x-3">
-                    <a 
+                    <a
                       href="https://www.facebook.com/groups/1650277201915391/"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -371,7 +371,7 @@ const ProductDetails = () => {
                     >
                       <Facebook className="w-4 h-4 text-red-600" />
                     </a>
-                    <a 
+                    <a
                       href="https://www.instagram.com/protein.tunisie/"
                       target="_blank"
                       rel="noopener noreferrer"

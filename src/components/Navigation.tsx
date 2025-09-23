@@ -469,11 +469,19 @@ const Navigation = () => {
               <SheetTrigger asChild>
                 <Button
                   variant="ghost"
-                  size="sm"
-                  className="text-red-600 hover:text-red-700 hover:bg-red-50 p-2"
+                  size="icon"
+                  className="text-red-600 hover:text-red-700 hover:bg-red-50 p-2 border border-red-600"
                   aria-label="Ouvrir le menu"
                 >
-                  <Menu className="h-6 w-6" />
+                  <Menu
+                    className="h-6 w-6"
+                    strokeWidth={3}
+                    style={{
+                      strokeWidth: "3px",
+                      strokeLinecap: "round",
+                      strokeLinejoin: "round",
+                    }}
+                  />
                 </Button>
               </SheetTrigger>
               <SheetContent

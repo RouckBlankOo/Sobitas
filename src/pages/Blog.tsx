@@ -260,7 +260,11 @@ const Blog = () => {
               <CustomSelect
                 options={sortOptions}
                 value={sortOption}
-                onChange={(value) => setSortOption(value as "recent" | "popular" | "alphabetical" | "rating")}
+                onChange={(value) =>
+                  setSortOption(
+                    value as "recent" | "popular" | "alphabetical" | "rating"
+                  )
+                }
                 className="w-full sm:w-auto min-w-[200px]"
               />
             </div>

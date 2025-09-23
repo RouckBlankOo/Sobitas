@@ -49,9 +49,7 @@ const Footer = () => {
               professionnelle.
             </p>
             <div className="max-w-md">
-              <h3 className="text-white font-semibold mb-3">
-                Restez Informé
-              </h3>
+              <h3 className="text-white font-semibold mb-3">Restez Informé</h3>
               <div className="flex gap-2">
                 <Input
                   placeholder="Entrez votre email"
