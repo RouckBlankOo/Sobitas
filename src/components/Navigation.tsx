@@ -313,7 +313,6 @@ const Navigation = () => {
                   aria-expanded={isProductsOpen}
                 >
                   Produits
-                  <ChevronDown className="ml-1 h-4 w-4" />
                 </button>
 
                 {isProductsOpen && (
@@ -471,7 +470,7 @@ const Navigation = () => {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="text-foreground hover:text-primary p-2"
+                  className="text-red-600 hover:text-red-700 hover:bg-red-50 p-2"
                   aria-label="Ouvrir le menu"
                 >
                   <Menu className="h-6 w-6" />
@@ -509,7 +508,7 @@ const Navigation = () => {
                         isProductsActive ? "text-primary bg-accent" : ""
                       }`}
                     >
-                      <span className="flex items-center">🛍️ Produits</span>
+                      <span className="flex items-center">Produits</span>
                       <ChevronDown
                         className={`h-5 w-5 transition-transform duration-200 ${
                           expandedCategories.has("main-products")
@@ -594,7 +593,7 @@ const Navigation = () => {
                       handleSmoothNavigation(e, "/about", "a-propos")
                     }
                   >
-                    ℹ️ À Propos
+                    À Propos
                   </a>
                   <a
                     href="#faq"

@@ -24,7 +24,7 @@ const Hero = () => {
         <div className="animate-fade-in">
           {/* 3D Floating Logo - FIRST ELEMENT - CLEAN VERSION */}
           <motion.div
-            className="flex justify-center items-center mb-8"
+            className="flex justify-center items-center mb-8 mt-16 sm:mt-8"
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
@@ -61,11 +61,11 @@ const Hero = () => {
                 transformStyle: "preserve-3d",
               }}
             >
-              {/* Main 3D Logo - Smaller Size */}
+              {/* Main 3D Logo - Bigger Size for Mobile */}
               <motion.img
                 src={logo3D}
                 alt="Sobitas 3D Logo"
-                className="relative z-10 w-32 h-22 md:w-40 md:h-40 lg:w-48 lg:h-48 object-contain"
+                className="relative z-10 w-40 h-32 sm:w-32 sm:h-22 md:w-40 md:h-40 lg:w-48 lg:h-48 object-contain"
                 style={{
                   filter: "drop-shadow(0 15px 30px rgba(0, 0, 0, 0.3))",
                   transformStyle: "preserve-3d",
